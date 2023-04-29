@@ -1,4 +1,4 @@
-package com.example.demo.registration;
+package com.example.demo.config.registration;
 
 public record RegistrationRequest(
         String firstName,

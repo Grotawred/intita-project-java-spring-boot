@@ -31,6 +31,6 @@ public class User {
     private String role;
 
     @Column(name = "isEnable")
-    private String isEnable;
+    private boolean isEnable;
 
 }
