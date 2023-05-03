@@ -1,5 +1,4 @@
-package com.example.demo.config;
-
+package com.example.demo.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,9 +7,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+/**
+ * @author Sampson Alfred
+ */
 @Configuration
 @EnableWebSecurity
-public class UserRegistrationConfig {
+public class UserRegistrationSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -19,19 +22,15 @@ public class UserRegistrationConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors()
-                .and()
-                .csrf()
-                .disable()
+                .and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/register")
+                .requestMatchers("/register/**")
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/users")
+                .requestMatchers("/users/**")
                 .hasAnyAuthority("USER", "ADMIN")
-                .and()
-                .formLogin()
-                .and()
-                .build();
+                .and().formLogin().and().build();
     }
+
 }

@@ -1,6 +1,6 @@
-package com.example.demo.config;
+package com.example.demo.security;
 
-import com.example.demo.models.User;
+import com.example.demo.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+/**
+ * @author Sampson Alfred
+ */
 @Data
 public class UserRegistrationDetails implements UserDetails {
 
@@ -21,8 +25,9 @@ public class UserRegistrationDetails implements UserDetails {
     public UserRegistrationDetails(User user) {
         this.userName = user.getEmail();
         this.password = user.getPassword();
-        this.isEnabled = user.isEnable();
-        this.authorities = Arrays.stream(user.getRole().split(","))
+        this.isEnabled = user.isEnabled();
+        this.authorities = Arrays.stream(user.getRole()
+                .split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
