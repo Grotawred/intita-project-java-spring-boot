@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @author Sampson Alfred
- */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")

@@ -9,9 +9,7 @@ import lombok.Setter;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * @author Sampson Alfred
- */
+
 @Getter
 @Setter
 @Entity

@@ -8,9 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-/**
- * @author Sampson Alfred
- */
+
 @Configuration
 @EnableWebSecurity
 public class UserRegistrationSecurityConfig {
@@ -32,5 +30,6 @@ public class UserRegistrationSecurityConfig {
                 .hasAnyAuthority("USER", "ADMIN")
                 .and().formLogin().and().build();
     }
+
 
 }

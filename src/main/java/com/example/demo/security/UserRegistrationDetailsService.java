@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- * @author Sampson Alfred
- */
+
 @Service
 @RequiredArgsConstructor
 public class UserRegistrationDetailsService implements UserDetailsService {

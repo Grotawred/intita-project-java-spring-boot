@@ -12,9 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Sampson Alfred
- */
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {

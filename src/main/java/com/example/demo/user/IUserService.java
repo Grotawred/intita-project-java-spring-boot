@@ -6,9 +6,7 @@ import com.example.demo.registration.RegistrationRequest;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Sampson Alfred
- */
+
 
 public interface IUserService {
     List<User> getUsers();
