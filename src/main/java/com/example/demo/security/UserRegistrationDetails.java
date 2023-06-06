@@ -1,6 +1,6 @@
 package com.example.demo.security;
 
-import com.example.demo.user.User;
+import com.example.demo.model.dto.UserDTO;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +18,7 @@ public class UserRegistrationDetails implements UserDetails {
   private boolean isEnabled;
   private List<GrantedAuthority> authorities;
 
-  public UserRegistrationDetails(User user) {
+  public UserRegistrationDetails(UserDTO user) {
     this.userName = user.getEmail();
     this.password = user.getPassword();
     this.isEnabled = user.isEnabled();

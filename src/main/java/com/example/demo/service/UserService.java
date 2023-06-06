@@ -1,12 +1,17 @@
-package com.example.demo.user;
+package com.example.demo.service;
+
+import static com.example.demo.constants.Const.*;
 
 import com.example.demo.exception.UserAlreadyExistsException;
+import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.User;
+import com.example.demo.model.dto.UserDTO;
 import com.example.demo.registration.RegistrationRequest;
 import com.example.demo.registration.token.VerificationToken;
 import com.example.demo.registration.token.VerificationTokenRepository;
+import com.example.demo.repository.UserRepository;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,36 +22,37 @@ public class UserService implements IUserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final VerificationTokenRepository tokenRepository;
+  private final UserMapper mapper;
 
   @Override
-  public List<User> getUsers() {
-    return userRepository.findAll();
+  public List<UserDTO> getUsers() {
+    return mapper.listOfUserToListOfUserDto(userRepository.findAll());
   }
 
   @Override
   public User registerUser(RegistrationRequest request) {
-    Optional<User> user = this.findByEmail(request.email());
-    if (user.isPresent()) {
+    List<UserDTO> user = this.findByEmail(request.email());
+    if (user.isEmpty()) {
       throw new UserAlreadyExistsException(
-          "User with email " + request.email() + " already exists");
+              TEXT_USER_WITH_EMAIL + request.email() + TEXT_ALREADY_EXIST);
     }
-    var newUser = new User();
+    var newUser = new UserDTO();
     newUser.setFirstName(request.firstName());
     newUser.setLastName(request.lastName());
     newUser.setEmail(request.email());
     newUser.setPassword(passwordEncoder.encode(request.password()));
     newUser.setRole(request.role());
-    return userRepository.save(newUser);
+    return userRepository.save(mapper.userDtoToUser(newUser));
   }
 
   @Override
-  public Optional<User> findByEmail(String email) {
-    return userRepository.findByEmail(email);
+  public List<UserDTO> findByEmail(String email) {
+    return mapper.listOfUserToListOfUserDto(userRepository.findByEmail(email));
   }
 
   @Override
-  public void saveUserVerificationToken(User theUser, String token) {
-    var verificationToken = new VerificationToken(token, theUser);
+  public void saveUserVerificationToken(UserDTO theUser, String token) {
+    var verificationToken = new VerificationToken(token, mapper.userDtoToUser(theUser));
     tokenRepository.save(verificationToken);
   }
 
@@ -54,16 +60,16 @@ public class UserService implements IUserService {
   public String validateToken(String theToken) {
     VerificationToken token = tokenRepository.findByToken(theToken);
     if (token == null) {
-      return "Invalid verification token";
+      return TEXT_ABOUT_INVALID_VERIFICATION_TOKEN;
     }
-    User user = token.getUser();
+    UserDTO user = mapper.userTOUserDto(token.getUser());
     Calendar calendar = Calendar.getInstance();
     if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
       tokenRepository.delete(token);
-      return "Token already expired";
+      return TEXT_TOKEN_ALREADY_EXPIRED;
     }
     user.setEnabled(true);
-    userRepository.save(user);
-    return "valid";
+    userRepository.save(mapper.userDtoToUser(user));
+    return TEXT_VALID;
   }
 }

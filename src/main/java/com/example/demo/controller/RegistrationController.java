@@ -1,10 +1,14 @@
-package com.example.demo.registration;
+package com.example.demo.controller;
+
+import static com.example.demo.constants.Const.*;
 
 import com.example.demo.event.RegistrationCompleteEvent;
+import com.example.demo.model.User;
+import com.example.demo.registration.RegistrationRequest;
 import com.example.demo.registration.token.VerificationToken;
 import com.example.demo.registration.token.VerificationTokenRepository;
-import com.example.demo.user.User;
-import com.example.demo.user.UserService;
+import com.example.demo.service.UserService;
+import com.example.demo.util.Utilis;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,30 +25,22 @@ public class RegistrationController {
 
   @PostMapping
   public String registerUser(
-      @RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
+          @RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
     User user = userService.registerUser(registrationRequest);
-    publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-    return "Success!  Please, check your email for to complete your registration";
+    publisher.publishEvent(new RegistrationCompleteEvent(user, Utilis.applicationUrl(request)));
+    return TEXT_FOR_COMPLETE_EMAIL_VERIFICATION;
   }
 
   @GetMapping("/verifyEmail")
   public String verifyEmail(@RequestParam("token") String token) {
     VerificationToken theToken = tokenRepository.findByToken(token);
     if (theToken.getUser().isEnabled()) {
-      return "This account has already been verified, please, login.";
+      return TEXT_FOR_SHOW_INFO_ABOUT_ALREADY_VERIFY_EMAIL;
     }
     String verificationResult = userService.validateToken(token);
     if (verificationResult.equalsIgnoreCase("valid")) {
-      return "Email verified successfully. Now you can login to your account";
+      return TEXT_FOR_SUCCESS_VERIFIED_EMAIL;
     }
-    return "Invalid verification token";
-  }
-
-  public String applicationUrl(HttpServletRequest request) {
-    return "http://"
-        + request.getServerName()
-        + ":"
-        + request.getServerPort()
-        + request.getContextPath();
+    return TEXT_ABOUT_INVALID_VERIFICATION_TOKEN;
   }
 }

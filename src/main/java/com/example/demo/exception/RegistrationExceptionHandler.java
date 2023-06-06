@@ -1,5 +1,7 @@
 package com.example.demo.exception;
 
+import static com.example.demo.constants.Const.ERROR;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,7 @@ public class RegistrationExceptionHandler {
   @ExceptionHandler(UserAlreadyExistsException.class)
   public Map<String, String> userNotFound(UserAlreadyExistsException ex) {
     Map<String, String> error = new HashMap<>();
-    error.put("error", ex.getMessage());
+    error.put(ERROR, ex.getMessage());
     return error;
   }
 }

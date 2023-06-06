@@ -1,6 +1,9 @@
 package com.example.demo.security;
 
-import com.example.demo.user.UserRepository;
+import static com.example.demo.constants.Const.TEXT_USER_NOT_FOUND;
+
+import com.example.demo.mapper.UserMapper;
+import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,12 +14,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserRegistrationDetailsService implements UserDetailsService {
   private final UserRepository userRepository;
+  private final UserMapper mapper;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return userRepository
-        .findByEmail(email)
-        .map(UserRegistrationDetails::new)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    return mapper.listOfUserToListOfUserDto(userRepository
+                    .findByEmail(email)).stream().findAny()
+            .map(UserRegistrationDetails::new)
+            .orElseThrow(() -> new UsernameNotFoundException(TEXT_USER_NOT_FOUND));
   }
 }
