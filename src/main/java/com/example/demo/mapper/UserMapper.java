@@ -6,15 +6,14 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper(componentModel="spring")
+@Mapper(componentModel = "spring")
 @Component
 public interface UserMapper {
-    User userDtoToUser(UserDTO userDTO);
+  User userDtoToUser(UserDTO userDTO);
 
-    UserDTO userTOUserDto(User user);
+  UserDTO userTOUserDto(User user);
 
-    List<UserDTO> listOfUserToListOfUserDto(List<User> users);
+  List<UserDTO> listOfUserToListOfUserDto(List<User> users);
 
-    List<User> listOfUserDtoToListOfUser(List<UserDTO> userDTOS);
-
+  List<User> listOfUserDtoToListOfUser(List<UserDTO> userDTOS);
 }
