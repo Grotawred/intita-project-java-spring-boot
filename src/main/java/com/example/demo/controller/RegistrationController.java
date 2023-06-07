@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import static com.example.demo.constants.Const.*;
+import static com.example.demo.constants.TextConstants.*;
 
 import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.model.User;
@@ -8,7 +8,7 @@ import com.example.demo.registration.RegistrationRequest;
 import com.example.demo.registration.token.VerificationToken;
 import com.example.demo.registration.token.VerificationTokenRepository;
 import com.example.demo.service.UserService;
-import com.example.demo.util.Utilis;
+import com.example.demo.util.URLUtilis;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +27,7 @@ public class RegistrationController {
   public String registerUser(
           @RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
     User user = userService.registerUser(registrationRequest);
-    publisher.publishEvent(new RegistrationCompleteEvent(user, Utilis.applicationUrl(request)));
+    publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request)));
     return TEXT_FOR_COMPLETE_EMAIL_VERIFICATION;
   }
 

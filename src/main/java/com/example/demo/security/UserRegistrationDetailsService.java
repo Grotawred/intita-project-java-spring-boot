@@ -1,6 +1,6 @@
 package com.example.demo.security;
 
-import static com.example.demo.constants.Const.TEXT_USER_NOT_FOUND;
+import static com.example.demo.constants.TextConstants.TEXT_USER_NOT_FOUND;
 
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;

@@ -1,6 +1,8 @@
 package com.example.demo.event.listener;
 
 import static com.example.demo.constants.Const.*;
+import static com.example.demo.constants.EmailConstants.*;
+import static com.example.demo.constants.URLConstants.MIDDLE_OF_URL_FOR_VERIFY_EMAIL;
 
 import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.mapper.UserMapper;
@@ -31,7 +33,7 @@ public class RegistrationCompleteEventListener
 
   @Override
   public void onApplicationEvent(RegistrationCompleteEvent event) {
-    UserDTO user = mapper.userTOUserDto(event.getUser());
+    UserDTO user = mapper.userToUserDto(event.getUser());
     String verificationToken = UUID.randomUUID().toString();
     userService.saveUserVerificationToken(user, verificationToken);
     String url = event.getApplicationUrl() + MIDDLE_OF_URL_FOR_VERIFY_EMAIL + verificationToken;

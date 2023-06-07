@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import static com.example.demo.constants.Const.*;
+import static com.example.demo.constants.TextConstants.*;
 
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
@@ -34,14 +34,16 @@ public class UserService implements IUserService {
     List<UserDTO> user = this.findByEmail(request.email());
     if (user.isEmpty()) {
       throw new UserAlreadyExistsException(
-              TEXT_USER_WITH_EMAIL + request.email() + TEXT_ALREADY_EXIST);
+          TEXT_USER_WITH_EMAIL + request.email() + TEXT_ALREADY_EXIST);
     }
-    var newUser = new UserDTO();
-    newUser.setFirstName(request.firstName());
-    newUser.setLastName(request.lastName());
-    newUser.setEmail(request.email());
-    newUser.setPassword(passwordEncoder.encode(request.password()));
-    newUser.setRole(request.role());
+    var newUser =
+        UserDTO.builder()
+            .firstName(request.firstName())
+            .lastName(request.lastName())
+            .email(request.email())
+            .password(passwordEncoder.encode(request.password()))
+            .role(request.role())
+            .build();
     return userRepository.save(mapper.userDtoToUser(newUser));
   }
 
@@ -62,7 +64,7 @@ public class UserService implements IUserService {
     if (token == null) {
       return TEXT_ABOUT_INVALID_VERIFICATION_TOKEN;
     }
-    UserDTO user = mapper.userTOUserDto(token.getUser());
+    UserDTO user = mapper.userToUserDto(token.getUser());
     Calendar calendar = Calendar.getInstance();
     if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
       tokenRepository.delete(token);
