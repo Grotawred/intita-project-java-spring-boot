@@ -8,11 +8,10 @@ import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.UserDTO;
 import com.example.demo.service.UserService;
-import java.io.UnsupportedEncodingException;
-import java.util.UUID;
-
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
