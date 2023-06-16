@@ -1,13 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.sql.Date;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -16,16 +13,18 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(name = "first_name", nullable = false)
-  private String firstName;
-  @Column(name = "last_name", nullable = false)
-  private String lastName;
-  @Column(name = "email", nullable = false)
-  private String email;
-  @Column(name = "password", nullable = false)
+  @Column(name = "role_id")
+  @OneToOne()
+  private Long roleID;
+  @Column(name = "user_data_id")
+  private Long userDataID;
+  @Column(name = "is_verified")
+  private boolean isVerified;
+  @Column(name = "registered_date")
+  private Date registeredDate;
+  @Column(name = "verified_date")
   private String password;
-  @Column(name = "role")
-  private String role;
-  @Column(name = "is_Enabled")
-  private boolean isEnabled = false;
+  @Column(name = "login")
+  private String login;
+
 }
