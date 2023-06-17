@@ -6,9 +6,11 @@ import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.model.dto.UserDTO;
+import com.example.demo.model.dto.UserDataDTO;
 import com.example.demo.registration.RegistrationRequest;
 import com.example.demo.registration.token.VerificationToken;
 import com.example.demo.registration.token.VerificationTokenRepository;
+import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
 import java.util.Calendar;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
+  private final UserDataRepository userDataRepository;
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final VerificationTokenRepository tokenRepository;
@@ -38,18 +41,23 @@ public class UserService implements IUserService {
     }
     var newUser =
         UserDTO.builder()
-            .firstName(request.firstName())
-            .lastName(request.lastName())
-            .email(request.email())
+            .login(request.login())
             .password(passwordEncoder.encode(request.password()))
-            .role(request.role())
             .build();
+
     return userRepository.save(mapper.userDtoToUser(newUser));
   }
 
   @Override
   public List<UserDTO> findByEmail(String email) {
-    return mapper.listOfUserToListOfUserDto(userRepository.findByEmail(email));
+    List<UserDataDTO> userData = mapper.listOfUserDataToListOfUserDataDto(userDataRepository.findByEmail(email));
+    List<User> user;
+    if (userData.isEmpty()){
+      return null;
+    }else {
+      user = userData.stream().filter(x -> x.getEmail().equals(email)).map(UserDataDTO::getUserId).toList();
+    }
+    return mapper.listOfUserToListOfUserDto(user);
   }
 
   @Override
@@ -70,7 +78,7 @@ public class UserService implements IUserService {
       tokenRepository.delete(token);
       return TEXT_TOKEN_ALREADY_EXPIRED;
     }
-    user.setEnabled(true);
+    user.setVerified(true);
     userRepository.save(mapper.userDtoToUser(user));
     return TEXT_VALID;
   }

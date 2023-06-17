@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +15,23 @@ import lombok.NoArgsConstructor;
 public class UserData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_data_id")
     private Long id;
-    @Column(name = "telephone_id")
-    private Long telephoneID;
-    @Column(name = "post_id")
-    private Long postID;
-    @Column(name = "personal_page_id")
-    private Long personalPageID;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
+    @OneToOne
+    @JoinColumn(name = "telephone_id")
+    private Telephone telephoneId;
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post postId;
+    @ManyToMany
+    @JoinTable(
+            name = "personal_page",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "paragraph_id"))
+    private Set<Paragraph> paragraphs;
     @Column(name = "email")
     private String email;
     @Column(name = "first_name")

@@ -3,6 +3,7 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import java.sql.Date;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
@@ -12,19 +13,24 @@ import lombok.*;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="user_id")
   private Long id;
-  @Column(name = "role_id")
-  @OneToOne()
-  private Long roleID;
-  @Column(name = "user_data_id")
-  private Long userDataID;
+  @OneToOne
+  @JoinColumn(name = "role_id")
+  private Role roleId;
+  @OneToOne
+  @JoinColumn(name = "user_data_id", referencedColumnName = "user_id")
+  private UserData userDataId;
   @Column(name = "is_verified")
   private boolean isVerified;
   @Column(name = "registered_date")
+  @CreationTimestamp
   private Date registeredDate;
   @Column(name = "verified_date")
-  private String password;
+  private Date verifiedDate;
   @Column(name = "login")
   private String login;
+  @Column(name = "password")
+  private String password;
 
 }

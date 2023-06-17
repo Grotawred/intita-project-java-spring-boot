@@ -34,22 +34,23 @@ public class RegistrationCompleteEventListener
   @Override
   public void onApplicationEvent(RegistrationCompleteEvent event) {
     UserDTO user = mapper.userToUserDto(event.getUser());
+    String email = event.getEmail();
     String verificationToken = UUID.randomUUID().toString();
     userService.saveUserVerificationToken(user, verificationToken);
     String url = event.getApplicationUrl() + MIDDLE_OF_URL_FOR_VERIFY_EMAIL + verificationToken;
     try {
-      sendVerificationEmail(url,user);
+      sendVerificationEmail(url,user, email);
     } catch (MessagingException | UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     }
     log.info(LOG_INFO_ABOUT_VERIFY_EMAIL, url);
   }
 
-  public void sendVerificationEmail(String url, UserDTO user)
+  public void sendVerificationEmail(String url, UserDTO user, String email)
       throws MessagingException, UnsupportedEncodingException {
     String mailContent =
         "<p> Hi, "
-            + user.getFirstName()
+            + user.getLogin()
             + ", </p>"
             + "<p>Thank you for registering with us,"
             + "Please, follow the link below to complete your registration.</p>"
@@ -61,7 +62,7 @@ public class RegistrationCompleteEventListener
     MimeMessage message = mailSender.createMimeMessage();
     var messageHelper = new MimeMessageHelper(message);
     messageHelper.setFrom(SENDER_EMAIL, SENDER_NAME_EMAIL);
-    messageHelper.setTo(user.getEmail());
+    messageHelper.setTo(email);
     messageHelper.setSubject(SUBJECT_FOR_EMAIL_LETTER);
     messageHelper.setText(mailContent, true);
     mailSender.send(message);

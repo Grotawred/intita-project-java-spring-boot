@@ -17,9 +17,9 @@ public class UserRegistrationDetailsService implements UserDetailsService {
   private final UserMapper mapper;
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return mapper.listOfUserToListOfUserDto(userRepository
-                    .findByEmail(email)).stream().findAny()
+                    .findByLogin(username)).stream().findAny()
             .map(UserRegistrationDetails::new)
             .orElseThrow(() -> new UsernameNotFoundException(TEXT_USER_NOT_FOUND));
   }

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class TelephoneCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "telephone_code_id")
     private Long id;
     @Column(name = "code")
     private int code;

@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,13 +8,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "personal_pages")
+@Table(name = "countries")
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonalPage {
+public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "county_id")
     private Long id;
-    @Column(name = "paragraph_id")
-    private Long paragraphID;
+    @OneToOne
+    @JoinColumn(name = "telephone_code_id")
+    private TelephoneCode telephoneCodeId;
+    @Column(name = "country")
+    private String country;
+
 }

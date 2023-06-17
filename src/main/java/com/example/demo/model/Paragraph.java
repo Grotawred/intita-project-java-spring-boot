@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 
 import jakarta.persistence.*;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,10 @@ import lombok.NoArgsConstructor;
 public class Paragraph {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "paragraph_id")
     private Long id;
+    @ManyToMany(mappedBy = "paragraphs")
+    private Set<UserData> userData;
     @Column(name = "header")
     private String header;
     @Column(name = "content")

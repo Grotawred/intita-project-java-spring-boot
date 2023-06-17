@@ -1,5 +1,9 @@
 package com.example.demo.model.dto;
 
+import com.example.demo.model.Role;
+import com.example.demo.model.UserData;
+import jakarta.persistence.*;
+import java.sql.Date;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,11 +11,12 @@ import lombok.Data;
 @Builder
 public class UserDTO {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private Role role;
+    private UserData userData;
+    private boolean isVerified;
+    private Date registeredDate;
+    private Date verifiedDate;
+    private String login;
     private String password;
-    private String role;
-    private boolean isEnabled = false;
 
 }

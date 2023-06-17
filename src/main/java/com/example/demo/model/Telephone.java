@@ -9,11 +9,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Telephone {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "telephone_code_id")
-    private Long telephoneID;
-    @Column(name = "telephone")
-    private int telephone;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @OneToOne
+  @JoinColumn(name = "telephone_code_id")
+  private TelephoneCode telephoneId;
+
+  @Column(name = "telephone")
+  private int telephone;
 }

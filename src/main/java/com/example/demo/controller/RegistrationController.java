@@ -27,14 +27,15 @@ public class RegistrationController {
   public String registerUser(
           @RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
     User user = userService.registerUser(registrationRequest);
-    publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request)));
+    String email = registrationRequest.email();
+    publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request), email));
     return TEXT_FOR_COMPLETE_EMAIL_VERIFICATION;
   }
 
   @GetMapping("/verifyEmail")
   public String verifyEmail(@RequestParam("token") String token) {
     VerificationToken theToken = tokenRepository.findByToken(token);
-    if (theToken.getUser().isEnabled()) {
+    if (theToken.getUser().isVerified()) {
       return TEXT_FOR_SHOW_INFO_ABOUT_ALREADY_VERIFY_EMAIL;
     }
     String verificationResult = userService.validateToken(token);
