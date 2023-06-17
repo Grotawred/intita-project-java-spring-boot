@@ -11,6 +11,7 @@ import lombok.*;
 public class Telephone {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "telephone_id")
   private Long id;
 
   @OneToOne
