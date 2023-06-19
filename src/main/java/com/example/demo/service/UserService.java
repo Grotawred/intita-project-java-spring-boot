@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
-import static com.example.demo.constants.TextConstants.*;
+import static com.example.demo.constants.TextConstants.ALREADY_EXIST_MESSAGE;
+import static com.example.demo.constants.TextConstants.INVALID_VERIFICATION_TOKEN_LOG_MESSAGE;
+import static com.example.demo.constants.TextConstants.TOKEN_ALREADY_EXPIRED_MESSAGE;
+import static com.example.demo.constants.TextConstants.USER_WITH_EMAIL_MESSAGE;
+import static com.example.demo.constants.TextConstants.VALID_MESSAGE;
 
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;

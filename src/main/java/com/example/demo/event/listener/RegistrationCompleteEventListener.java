@@ -1,7 +1,9 @@
 package com.example.demo.event.listener;
 
-import static com.example.demo.constants.Const.*;
-import static com.example.demo.constants.EmailConstants.*;
+import static com.example.demo.constants.Const.EMAIL_VERIFIED_LOG_MESSAGE;
+import static com.example.demo.constants.EmailConstants.SENDER_EMAIL;
+import static com.example.demo.constants.EmailConstants.SENDER_NAME_EMAIL;
+import static com.example.demo.constants.EmailConstants.SUBJECT_FOR_EMAIL_LETTER;
 import static com.example.demo.constants.URLConstants.MIDDLE_OF_URL_FOR_VERIFY_EMAIL;
 
 import com.example.demo.event.RegistrationCompleteEvent;

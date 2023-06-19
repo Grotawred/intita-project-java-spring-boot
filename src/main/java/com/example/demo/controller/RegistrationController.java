@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
-import static com.example.demo.constants.TextConstants.*;
+import static com.example.demo.constants.TextConstants.ALREADY_VERIFIED_EMAIL_MESSAGE;
+import static com.example.demo.constants.TextConstants.EMAIL_VERIFICATION_COMPLETE_MESSAGE;
+import static com.example.demo.constants.TextConstants.EMAIL_VERIFIED_SUCCESS_MESSAGE;
+import static com.example.demo.constants.TextConstants.INVALID_VERIFICATION_TOKEN_LOG_MESSAGE;
 
 import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.model.User;
