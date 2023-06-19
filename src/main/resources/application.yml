@@ -19,4 +19,10 @@ spring:
           auth: true
         starttls:
           enable: true
-  
+server:
+  port: 8080
+spring-doc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
