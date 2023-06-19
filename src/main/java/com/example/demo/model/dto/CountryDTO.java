@@ -9,5 +9,5 @@ import lombok.Data;
 public class CountryDTO {
     private Long id;
     private TelephoneCode telephoneCode;
-    private String country;
+    private String name;
 }

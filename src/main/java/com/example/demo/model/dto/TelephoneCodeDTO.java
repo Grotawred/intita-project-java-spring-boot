@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class TelephoneCodeDTO {
-    private Long id;
-    private int code;
+  private Long id;
+  private String code;
 }

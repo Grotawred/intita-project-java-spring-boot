@@ -17,7 +17,7 @@ public class PersonalDataDTO {
     private Set<Paragraph> paragraphs;
     private String email;
     private String firstName;
-    private String last_name;
+    private String lastName;
     private LocalDate dateOfBirth;
     private String profileImageUrl;
 }

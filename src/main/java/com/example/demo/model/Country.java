@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Country {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "county_id")
-    private Long id;
-    @OneToOne
-    @JoinColumn(name = "telephone_code_id")
-    private TelephoneCode telephoneCode;
-    @Column(name = "name")
-    private String country;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "county_id")
+  private Long id;
 
+  @OneToOne
+  @JoinColumn(name = "telephone_code_id")
+  private TelephoneCode telephoneCode;
+
+  @Column(name = "name")
+  private String name;
 }

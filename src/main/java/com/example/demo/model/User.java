@@ -18,7 +18,7 @@ public class User {
   private Long id;
   @ManyToMany
   @JoinTable(
-          name = "user_role",
+          name = "user_role_relations",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
@@ -27,10 +27,10 @@ public class User {
   private PersonalData personalData;
   @Column(name = "is_verified")
   private boolean isVerified;
-  @Column(name = "registration_date")
-  private LocalDateTime registrationDate;
-  @Column(name = "verification_date")
-  private LocalDateTime verificationDate;
+  @Column(name = "registration_date_time")
+  private LocalDateTime registrationDateTime;
+  @Column(name = "verification_date_time")
+  private LocalDateTime verificationDateTime;
   @Column(name = "login")
   private String login;
   @Column(name = "password")

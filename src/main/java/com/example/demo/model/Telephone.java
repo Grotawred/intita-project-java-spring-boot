@@ -19,5 +19,5 @@ public class Telephone {
   private TelephoneCode telephoneCode;
 
   @Column(name = "telephone")
-  private int telephoneNumber;
+  private Long telephoneNumber;
 }

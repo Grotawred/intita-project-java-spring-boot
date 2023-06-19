@@ -41,7 +41,7 @@ public class UserService implements IUserService {
     List<UserDTO> user = this.findByEmail(request.email());
     if (!user.isEmpty()) {
       throw new UserAlreadyExistsException(
-          TEXT_USER_WITH_EMAIL + request.email() + TEXT_ALREADY_EXIST);
+          USER_WITH_EMAIL_MESSAGE + request.email() + ALREADY_EXIST_MESSAGE);
     }
     var newUserData = PersonalData.builder().email(request.email()).build();
     userDataRepository.save(newUserData);
@@ -51,19 +51,20 @@ public class UserService implements IUserService {
             .password(passwordEncoder.encode(request.password()))
             .roles(roleRepository.findRoleByName(request.role()))
             .personalData(newUserData)
-            .registrationDate(java.time.LocalDateTime.now())
+            .registrationDateTime(java.time.LocalDateTime.now())
             .build();
     return userRepository.save(newUser);
   }
 
   @Override
   public List<UserDTO> findByEmail(String email) {
-    PersonalDataDTO userData = mapper.personalDataToPersonalDataDto(userDataRepository.findByEmail(email));
+    PersonalDataDTO userData =
+        mapper.personalDataToPersonalDataDto(userDataRepository.findByEmail(email));
     List<User> user;
     if (userData == null) {
       return new ArrayList<>();
     } else {
-      user =  userRepository.findByPersonalData(mapper.personalDataDtoToPersonalData(userData));
+      user = userRepository.findByPersonalData(mapper.personalDataDtoToPersonalData(userData));
     }
     return mapper.listOfUserToListOfUserDto(user);
   }
@@ -78,16 +79,16 @@ public class UserService implements IUserService {
   public String validateToken(String theToken) {
     VerificationToken token = tokenRepository.findByToken(theToken);
     if (token == null) {
-      return INVALID_VERIFICATION_TOKEN_LOG;
+      return INVALID_VERIFICATION_TOKEN_LOG_MESSAGE;
     }
     UserDTO user = mapper.userToUserDto(token.getUser());
     Calendar calendar = Calendar.getInstance();
     if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
       tokenRepository.delete(token);
-      return TEXT_TOKEN_ALREADY_EXPIRED;
+      return TOKEN_ALREADY_EXPIRED_MESSAGE;
     }
     user.setVerified(true);
     userRepository.save(mapper.userDtoToUser(user));
-    return TEXT_VALID;
+    return VALID_MESSAGE;
   }
 }

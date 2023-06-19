@@ -22,7 +22,8 @@ public class UserRegistrationDetails implements UserDetails {
     this.username = user.getLogin();
     this.password = user.getPassword();
     this.isVerified = user.isVerified();
-    this.authorities = user.getRoles().stream()
+    this.authorities =
+        user.getRoles().stream()
             .map(Role::getName)
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());

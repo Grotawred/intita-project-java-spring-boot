@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/register")
+@RequestMapping("/registration")
 public class RegistrationController {
 
   private final UserService userService;
@@ -29,10 +29,10 @@ public class RegistrationController {
     User user = userService.registerUser(registrationRequest);
     String email = registrationRequest.email();
     publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request), email));
-    return TEXT_FOR_COMPLETE_EMAIL_VERIFICATION;
+    return EMAIL_VERIFICATION_COMPLETE_MESSAGE;
   }
 
-  @GetMapping("/verifyEmail")
+  @GetMapping("/email/verification")
   public String verifyEmail(@RequestParam("token") String token) {
     VerificationToken verificationToken = tokenRepository.findByToken(token);
     if (verificationToken.getUser().isVerified()) {
@@ -40,8 +40,8 @@ public class RegistrationController {
     }
     String verificationResult = userService.validateToken(token);
     if (verificationResult.equalsIgnoreCase("valid")) {
-      return TEXT_FOR_SUCCESS_VERIFIED_EMAIL;
+      return EMAIL_VERIFIED_SUCCESS_MESSAGE;
     }
-    return INVALID_VERIFICATION_TOKEN_LOG;
+    return INVALID_VERIFICATION_TOKEN_LOG_MESSAGE;
   }
 }

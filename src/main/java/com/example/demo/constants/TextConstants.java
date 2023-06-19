@@ -2,24 +2,23 @@ package com.example.demo.constants;
 
 public interface TextConstants {
 
+  String EMAIL_VERIFICATION_COMPLETE_MESSAGE =
+      "Success!  Please, check your email for to complete your registration";
 
-    String TEXT_FOR_COMPLETE_EMAIL_VERIFICATION = "Success!  Please, check your email for to complete your registration";
+  String ALREADY_VERIFIED_EMAIL_MESSAGE = "This account has already been verified, please, login.";
 
-    String ALREADY_VERIFIED_EMAIL_MESSAGE = "This account has already been verified, please, login.";
+  String EMAIL_VERIFIED_SUCCESS_MESSAGE =
+      "Email verified successfully. Now you can login to your account";
 
-    String TEXT_FOR_SUCCESS_VERIFIED_EMAIL = "Email verified successfully. Now you can login to your account";
+  String INVALID_VERIFICATION_TOKEN_LOG_MESSAGE = "Invalid verification token";
 
-    String INVALID_VERIFICATION_TOKEN_LOG = "Invalid verification token";
+  String USER_NOT_FOUND_MESSAGE = "User not found";
 
-    String TEXT_USER_NOT_FOUND = "User not found";
+  String USER_WITH_EMAIL_MESSAGE = "User with email ";
 
-    String TEXT_USER_WITH_EMAIL = "User with email ";
+  String ALREADY_EXIST_MESSAGE = " already exists";
 
-    String TEXT_ALREADY_EXIST = " already exists";
+  String TOKEN_ALREADY_EXPIRED_MESSAGE = "Token already expired";
 
-    String TEXT_TOKEN_ALREADY_EXPIRED = "Token already expired";
-
-    String TEXT_VALID = "valid";
-
-
+  String VALID_MESSAGE = "valid";
 }

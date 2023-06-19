@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private Long id;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
-    @Column(name = "name")
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "role_id")
+  private Long id;
+
+  @ManyToMany(mappedBy = "roles")
+  private Set<User> users;
+
+  @Column(name = "name")
+  private String name;
 }

@@ -27,7 +27,7 @@ public class PersonalData {
     private Post post;
     @ManyToMany
     @JoinTable(
-            name = "personal_page",
+            name = "personal_data_paragraphs_relations",
             joinColumns = @JoinColumn(name = "personal_data_id"),
             inverseJoinColumns = @JoinColumn(name = "paragraph_id"))
     private Set<Paragraph> paragraphs;
@@ -36,7 +36,7 @@ public class PersonalData {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
     @Column(name = "profile_image_url")

@@ -17,5 +17,5 @@ public class TelephoneCode {
     @Column(name = "telephone_code_id")
     private Long id;
     @Column(name = "code")
-    private int code;
+    private String code;
 }
