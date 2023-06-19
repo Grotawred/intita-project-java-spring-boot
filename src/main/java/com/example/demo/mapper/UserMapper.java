@@ -1,6 +1,8 @@
 package com.example.demo.mapper;
 
+import com.example.demo.model.PersonalData;
 import com.example.demo.model.User;
+import com.example.demo.model.dto.PersonalDataDTO;
 import com.example.demo.model.dto.UserDTO;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -13,5 +15,7 @@ public interface UserMapper {
 
   List<UserDTO> listOfUserToListOfUserDto(List<User> users);
 
-  List<User> listOfUserDtoToListOfUser(List<UserDTO> userDTOS);
+  PersonalData personalDataDtoToPersonalData(PersonalDataDTO personalDataDTO);
+
+  PersonalDataDTO personalDataToPersonalDataDto(PersonalData personalData);
 }

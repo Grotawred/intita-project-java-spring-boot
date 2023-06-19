@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
-import static com.example.demo.constants.TextConstants.*;
+import static com.example.demo.constants.TextConstants.ALREADY_VERIFIED_EMAIL_MESSAGE;
+import static com.example.demo.constants.TextConstants.EMAIL_VERIFICATION_COMPLETE_MESSAGE;
+import static com.example.demo.constants.TextConstants.EMAIL_VERIFIED_SUCCESS_MESSAGE;
+import static com.example.demo.constants.TextConstants.INVALID_VERIFICATION_TOKEN_LOG_MESSAGE;
 
 import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.model.User;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/register")
+@RequestMapping("/registration")
 public class RegistrationController {
 
   private final UserService userService;
@@ -27,20 +30,21 @@ public class RegistrationController {
   public String registerUser(
           @RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
     User user = userService.registerUser(registrationRequest);
-    publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request)));
-    return TEXT_FOR_COMPLETE_EMAIL_VERIFICATION;
+    String email = registrationRequest.email();
+    publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request), email));
+    return EMAIL_VERIFICATION_COMPLETE_MESSAGE;
   }
 
-  @GetMapping("/verifyEmail")
+  @GetMapping("/email/verification")
   public String verifyEmail(@RequestParam("token") String token) {
-    VerificationToken theToken = tokenRepository.findByToken(token);
-    if (theToken.getUser().isEnabled()) {
-      return TEXT_FOR_SHOW_INFO_ABOUT_ALREADY_VERIFY_EMAIL;
+    VerificationToken verificationToken = tokenRepository.findByToken(token);
+    if (verificationToken.getUser().isVerified()) {
+      return ALREADY_VERIFIED_EMAIL_MESSAGE;
     }
     String verificationResult = userService.validateToken(token);
     if (verificationResult.equalsIgnoreCase("valid")) {
-      return TEXT_FOR_SUCCESS_VERIFIED_EMAIL;
+      return EMAIL_VERIFIED_SUCCESS_MESSAGE;
     }
-    return TEXT_ABOUT_INVALID_VERIFICATION_TOKEN;
+    return INVALID_VERIFICATION_TOKEN_LOG_MESSAGE;
   }
 }

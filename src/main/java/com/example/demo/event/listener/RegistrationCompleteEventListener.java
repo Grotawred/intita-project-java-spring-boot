@@ -1,7 +1,9 @@
 package com.example.demo.event.listener;
 
-import static com.example.demo.constants.Const.*;
-import static com.example.demo.constants.EmailConstants.*;
+import static com.example.demo.constants.Const.EMAIL_VERIFIED_LOG_MESSAGE;
+import static com.example.demo.constants.EmailConstants.SENDER_EMAIL;
+import static com.example.demo.constants.EmailConstants.SENDER_NAME_EMAIL;
+import static com.example.demo.constants.EmailConstants.SUBJECT_FOR_EMAIL_LETTER;
 import static com.example.demo.constants.URLConstants.MIDDLE_OF_URL_FOR_VERIFY_EMAIL;
 
 import com.example.demo.event.RegistrationCompleteEvent;
@@ -34,22 +36,23 @@ public class RegistrationCompleteEventListener
   @Override
   public void onApplicationEvent(RegistrationCompleteEvent event) {
     UserDTO user = mapper.userToUserDto(event.getUser());
+    String email = event.getEmail();
     String verificationToken = UUID.randomUUID().toString();
     userService.saveUserVerificationToken(user, verificationToken);
     String url = event.getApplicationUrl() + MIDDLE_OF_URL_FOR_VERIFY_EMAIL + verificationToken;
     try {
-      sendVerificationEmail(url,user);
+      sendVerificationEmail(url,user, email);
     } catch (MessagingException | UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     }
-    log.info(LOG_INFO_ABOUT_VERIFY_EMAIL, url);
+    log.info(EMAIL_VERIFIED_LOG_MESSAGE, url);
   }
 
-  public void sendVerificationEmail(String url, UserDTO user)
+  public void sendVerificationEmail(String url, UserDTO user, String email)
       throws MessagingException, UnsupportedEncodingException {
     String mailContent =
         "<p> Hi, "
-            + user.getFirstName()
+            + user.getLogin()
             + ", </p>"
             + "<p>Thank you for registering with us,"
             + "Please, follow the link below to complete your registration.</p>"
@@ -61,7 +64,7 @@ public class RegistrationCompleteEventListener
     MimeMessage message = mailSender.createMimeMessage();
     var messageHelper = new MimeMessageHelper(message);
     messageHelper.setFrom(SENDER_EMAIL, SENDER_NAME_EMAIL);
-    messageHelper.setTo(user.getEmail());
+    messageHelper.setTo(email);
     messageHelper.setSubject(SUBJECT_FOR_EMAIL_LETTER);
     messageHelper.setText(mailContent, true);
     mailSender.send(message);

@@ -10,10 +10,12 @@ import org.springframework.context.ApplicationEvent;
 public class RegistrationCompleteEvent extends ApplicationEvent {
   private User user;
   private String applicationUrl;
+  private String email;
 
-  public RegistrationCompleteEvent(User user, String applicationUrl) {
+  public RegistrationCompleteEvent(User user, String applicationUrl, String email) {
     super(user);
     this.user = user;
     this.applicationUrl = applicationUrl;
+    this.email = email;
   }
 }

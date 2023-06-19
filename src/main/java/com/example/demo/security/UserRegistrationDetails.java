@@ -1,7 +1,7 @@
 package com.example.demo.security;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.dto.UserDTO;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,17 +13,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 public class UserRegistrationDetails implements UserDetails {
 
-  private String userName;
+  private String username;
   private String password;
-  private boolean isEnabled;
+  private boolean isVerified;
   private List<GrantedAuthority> authorities;
 
   public UserRegistrationDetails(UserDTO user) {
-    this.userName = user.getEmail();
+    this.username = user.getLogin();
     this.password = user.getPassword();
-    this.isEnabled = user.isEnabled();
+    this.isVerified = user.isVerified();
     this.authorities =
-        Arrays.stream(user.getRole().split(","))
+        user.getRoles().stream()
+            .map(Role::getName)
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
   }
@@ -40,7 +41,7 @@ public class UserRegistrationDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return userName;
+    return username;
   }
 
   @Override
@@ -60,6 +61,6 @@ public class UserRegistrationDetails implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return isEnabled;
+    return isVerified;
   }
 }

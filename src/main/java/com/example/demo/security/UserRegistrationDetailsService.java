@@ -1,6 +1,6 @@
 package com.example.demo.security;
 
-import static com.example.demo.constants.TextConstants.TEXT_USER_NOT_FOUND;
+import static com.example.demo.constants.TextConstants.USER_NOT_FOUND_MESSAGE;
 
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
@@ -17,10 +17,10 @@ public class UserRegistrationDetailsService implements UserDetailsService {
   private final UserMapper mapper;
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return mapper.listOfUserToListOfUserDto(userRepository
-                    .findByEmail(email)).stream().findAny()
-            .map(UserRegistrationDetails::new)
-            .orElseThrow(() -> new UsernameNotFoundException(TEXT_USER_NOT_FOUND));
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    return mapper.listOfUserToListOfUserDto(userRepository.findByLogin(username)).stream()
+        .findAny()
+        .map(UserRegistrationDetails::new)
+        .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND_MESSAGE));
   }
 }

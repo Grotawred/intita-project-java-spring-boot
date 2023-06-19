@@ -1,9 +1,17 @@
 package com.example.demo.registration.token;
 
 import com.example.demo.model.User;
-import jakarta.persistence.*;
+
 import java.util.Calendar;
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +24,7 @@ public class VerificationToken {
   private static final int EXPIRATION_TIME = 15;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "verification_token_id")
   private Long id;
   private String token;
   private Date expirationTime;
@@ -26,11 +35,6 @@ public class VerificationToken {
   public VerificationToken(String token, User user) {
     this.token = token;
     this.user = user;
-    this.expirationTime = this.getTokenExpirationTime();
-  }
-
-  public VerificationToken(String token) {
-    this.token = token;
     this.expirationTime = this.getTokenExpirationTime();
   }
 
