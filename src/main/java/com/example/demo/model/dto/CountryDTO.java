@@ -1,7 +1,6 @@
 package com.example.demo.model.dto;
 
 import com.example.demo.model.TelephoneCode;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +8,6 @@ import lombok.Data;
 @Builder
 public class CountryDTO {
     private Long id;
-    private TelephoneCode telephoneCodeId;
+    private TelephoneCode telephoneCode;
     private String country;
 }

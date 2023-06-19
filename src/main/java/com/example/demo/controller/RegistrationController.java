@@ -34,14 +34,14 @@ public class RegistrationController {
 
   @GetMapping("/verifyEmail")
   public String verifyEmail(@RequestParam("token") String token) {
-    VerificationToken theToken = tokenRepository.findByToken(token);
-    if (theToken.getUser().isVerified()) {
-      return TEXT_FOR_SHOW_INFO_ABOUT_ALREADY_VERIFY_EMAIL;
+    VerificationToken verificationToken = tokenRepository.findByToken(token);
+    if (verificationToken.getUser().isVerified()) {
+      return ALREADY_VERIFIED_EMAIL_MESSAGE;
     }
     String verificationResult = userService.validateToken(token);
     if (verificationResult.equalsIgnoreCase("valid")) {
       return TEXT_FOR_SUCCESS_VERIFIED_EMAIL;
     }
-    return TEXT_ABOUT_INVALID_VERIFICATION_TOKEN;
+    return INVALID_VERIFICATION_TOKEN_LOG;
   }
 }

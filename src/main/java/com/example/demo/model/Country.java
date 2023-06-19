@@ -18,8 +18,8 @@ public class Country {
     private Long id;
     @OneToOne
     @JoinColumn(name = "telephone_code_id")
-    private TelephoneCode telephoneCodeId;
-    @Column(name = "country")
+    private TelephoneCode telephoneCode;
+    @Column(name = "name")
     private String country;
 
 }

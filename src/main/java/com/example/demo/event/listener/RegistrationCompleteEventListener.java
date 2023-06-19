@@ -43,7 +43,7 @@ public class RegistrationCompleteEventListener
     } catch (MessagingException | UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     }
-    log.info(LOG_INFO_ABOUT_VERIFY_EMAIL, url);
+    log.info(EMAIL_VERIFIED_LOG_MESSAGE, url);
   }
 
   public void sendVerificationEmail(String url, UserDTO user, String email)

@@ -4,14 +4,17 @@ import static com.example.demo.constants.TextConstants.*;
 
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.PersonalData;
 import com.example.demo.model.User;
+import com.example.demo.model.dto.PersonalDataDTO;
 import com.example.demo.model.dto.UserDTO;
-import com.example.demo.model.dto.UserDataDTO;
 import com.example.demo.registration.RegistrationRequest;
 import com.example.demo.registration.token.VerificationToken;
 import com.example.demo.registration.token.VerificationTokenRepository;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class UserService implements IUserService {
   private final PasswordEncoder passwordEncoder;
   private final VerificationTokenRepository tokenRepository;
   private final UserMapper mapper;
+  private final RoleRepository roleRepository;
 
   @Override
   public List<UserDTO> getUsers() {
@@ -35,27 +39,31 @@ public class UserService implements IUserService {
   @Override
   public User registerUser(RegistrationRequest request) {
     List<UserDTO> user = this.findByEmail(request.email());
-    if (user.isEmpty()) {
+    if (!user.isEmpty()) {
       throw new UserAlreadyExistsException(
           TEXT_USER_WITH_EMAIL + request.email() + TEXT_ALREADY_EXIST);
     }
+    var newUserData = PersonalData.builder().email(request.email()).build();
+    userDataRepository.save(newUserData);
     var newUser =
-        UserDTO.builder()
+        User.builder()
             .login(request.login())
             .password(passwordEncoder.encode(request.password()))
+            .roles(roleRepository.findRoleByName(request.role()))
+            .personalData(newUserData)
+            .registrationDate(java.time.LocalDateTime.now())
             .build();
-
-    return userRepository.save(mapper.userDtoToUser(newUser));
+    return userRepository.save(newUser);
   }
 
   @Override
   public List<UserDTO> findByEmail(String email) {
-    List<UserDataDTO> userData = mapper.listOfUserDataToListOfUserDataDto(userDataRepository.findByEmail(email));
+    PersonalDataDTO userData = mapper.personalDataToPersonalDataDto(userDataRepository.findByEmail(email));
     List<User> user;
-    if (userData.isEmpty()){
-      return null;
-    }else {
-      user = userData.stream().filter(x -> x.getEmail().equals(email)).map(UserDataDTO::getUserId).toList();
+    if (userData == null) {
+      return new ArrayList<>();
+    } else {
+      user =  userRepository.findByPersonalData(mapper.personalDataDtoToPersonalData(userData));
     }
     return mapper.listOfUserToListOfUserDto(user);
   }
@@ -70,7 +78,7 @@ public class UserService implements IUserService {
   public String validateToken(String theToken) {
     VerificationToken token = tokenRepository.findByToken(theToken);
     if (token == null) {
-      return TEXT_ABOUT_INVALID_VERIFICATION_TOKEN;
+      return INVALID_VERIFICATION_TOKEN_LOG;
     }
     UserDTO user = mapper.userToUserDto(token.getUser());
     Calendar calendar = Calendar.getInstance();

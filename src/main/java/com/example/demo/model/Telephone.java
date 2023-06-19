@@ -16,8 +16,8 @@ public class Telephone {
 
   @OneToOne
   @JoinColumn(name = "telephone_code_id")
-  private TelephoneCode telephoneId;
+  private TelephoneCode telephoneCode;
 
   @Column(name = "telephone")
-  private int telephone;
+  private int telephoneNumber;
 }

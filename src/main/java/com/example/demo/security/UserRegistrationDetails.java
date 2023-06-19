@@ -1,7 +1,7 @@
 package com.example.demo.security;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.dto.UserDTO;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +22,8 @@ public class UserRegistrationDetails implements UserDetails {
     this.username = user.getLogin();
     this.password = user.getPassword();
     this.isVerified = user.isVerified();
-    this.authorities =
-        Arrays.stream(user.getRole().getName().split(","))
+    this.authorities = user.getRoles().stream()
+            .map(Role::getName)
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
   }

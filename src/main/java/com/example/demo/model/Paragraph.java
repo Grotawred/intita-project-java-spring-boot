@@ -18,9 +18,9 @@ public class Paragraph {
     @Column(name = "paragraph_id")
     private Long id;
     @ManyToMany(mappedBy = "paragraphs")
-    private Set<UserData> userData;
+    private Set<PersonalData> personalData;
     @Column(name = "header")
     private String header;
-    @Column(name = "content")
-    private String content;
+    @Column(name = "description")
+    private String description;
 }

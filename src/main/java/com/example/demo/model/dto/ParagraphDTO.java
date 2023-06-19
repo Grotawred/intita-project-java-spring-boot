@@ -1,7 +1,6 @@
 package com.example.demo.model.dto;
 
-import com.example.demo.model.UserData;
-import jakarta.persistence.*;
+import com.example.demo.model.PersonalData;
 import java.util.Set;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,7 @@ import lombok.Data;
 @Builder
 public class ParagraphDTO {
     private Long id;
-    private Set<UserData> userData;
+    private Set<PersonalData> personalData;
     private String header;
-    private String content;
+    private String description;
 }

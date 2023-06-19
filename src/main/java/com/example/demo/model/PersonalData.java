@@ -1,35 +1,34 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "user_data")
+@Table(name = "personal_data")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserData {
+@Builder
+public class PersonalData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_data_id")
+    @Column(name = "personal_data_id")
     private Long id;
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private User userId;
-    @OneToOne
     @JoinColumn(name = "telephone_id")
-    private Telephone telephoneId;
+    private Telephone telephone;
     @OneToOne
     @JoinColumn(name = "post_id")
-    private Post postId;
+    private Post post;
     @ManyToMany
     @JoinTable(
             name = "personal_page",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "personal_data_id"),
             inverseJoinColumns = @JoinColumn(name = "paragraph_id"))
     private Set<Paragraph> paragraphs;
     @Column(name = "email")
@@ -39,7 +38,7 @@ public class UserData {
     @Column(name = "last_name")
     private String last_name;
     @Column(name = "date_of_birth")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 }

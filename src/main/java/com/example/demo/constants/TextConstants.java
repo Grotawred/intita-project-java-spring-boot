@@ -5,11 +5,11 @@ public interface TextConstants {
 
     String TEXT_FOR_COMPLETE_EMAIL_VERIFICATION = "Success!  Please, check your email for to complete your registration";
 
-    String TEXT_FOR_SHOW_INFO_ABOUT_ALREADY_VERIFY_EMAIL = "This account has already been verified, please, login.";
+    String ALREADY_VERIFIED_EMAIL_MESSAGE = "This account has already been verified, please, login.";
 
     String TEXT_FOR_SUCCESS_VERIFIED_EMAIL = "Email verified successfully. Now you can login to your account";
 
-    String TEXT_ABOUT_INVALID_VERIFICATION_TOKEN = "Invalid verification token";
+    String INVALID_VERIFICATION_TOKEN_LOG = "Invalid verification token";
 
     String TEXT_USER_NOT_FOUND = "User not found";
 
