@@ -1,8 +1,5 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +10,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.time.ZonedDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,9 +40,9 @@ public class User {
   @Column(name = "is_verified")
   private boolean isVerified;
   @Column(name = "registration_date_time")
-  private LocalDateTime registrationDateTime;
+  private ZonedDateTime registrationDateTime;
   @Column(name = "verification_date_time")
-  private LocalDateTime verificationDateTime;
+  private ZonedDateTime verificationDateTime;
   @Column(name = "login")
   private String login;
   @Column(name = "password")

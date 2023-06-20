@@ -2,7 +2,7 @@ package com.example.demo.model.dto;
 
 import com.example.demo.model.PersonalData;
 import com.example.demo.model.Role;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Set;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +14,8 @@ public class UserDTO {
     private Set<Role> roles;
     private PersonalData personalData;
     private boolean isVerified;
-    private LocalDateTime registrationDate;
-    private LocalDateTime verificationDate;
+    private ZonedDateTime registrationDate;
+    private ZonedDateTime verificationDate;
     private String login;
     private String password;
 
