@@ -55,7 +55,7 @@ public class UserService implements IUserService {
             .password(passwordEncoder.encode(request.password()))
             .roles(roleRepository.findRoleByName(request.role()))
             .personalData(newUserData)
-            .registrationDateTime(java.time.LocalDateTime.now())
+            .registrationDateTime(java.time.ZonedDateTime.now())
             .build();
     return userRepository.save(newUser);
   }

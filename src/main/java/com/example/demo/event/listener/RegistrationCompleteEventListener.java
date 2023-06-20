@@ -50,9 +50,24 @@ public class RegistrationCompleteEventListener
 
   public void sendVerificationEmail(String url, UserDTO user, String email)
       throws MessagingException, UnsupportedEncodingException {
-    String mailContent =
-        "<p> Hi, "
-            + user.getLogin()
+
+    MimeMessage message = mailSender.createMimeMessage();
+    var messageHelper = new MimeMessageHelper(message);
+    buildMessageHelper(messageHelper, email, user.getLogin(), url);
+    mailSender.send(message);
+  }
+
+  private void buildMessageHelper(MimeMessageHelper messageHelper, String email, String login, String url)
+          throws MessagingException, UnsupportedEncodingException {
+    messageHelper.setFrom(SENDER_EMAIL, SENDER_NAME_EMAIL);
+    messageHelper.setTo(email);
+    messageHelper.setSubject(SUBJECT_FOR_EMAIL_LETTER);
+    messageHelper.setText(createHtmlMessageContent(login, url), true);
+  }
+
+  private String createHtmlMessageContent(String login, String url){
+    return "<p> Hi, "
+            + login
             + ", </p>"
             + "<p>Thank you for registering with us,"
             + "Please, follow the link below to complete your registration.</p>"
@@ -60,13 +75,5 @@ public class RegistrationCompleteEventListener
             + url
             + "\">Verify your email to activate your account</a>"
             + "<p> Thank you <br> Users Registration Portal Service";
-
-    MimeMessage message = mailSender.createMimeMessage();
-    var messageHelper = new MimeMessageHelper(message);
-    messageHelper.setFrom(SENDER_EMAIL, SENDER_NAME_EMAIL);
-    messageHelper.setTo(email);
-    messageHelper.setSubject(SUBJECT_FOR_EMAIL_LETTER);
-    messageHelper.setText(mailContent, true);
-    mailSender.send(message);
   }
 }
