@@ -12,27 +12,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class UserRegistrationSecurityConfig {
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.cors()
-        .and()
-        .csrf()
-        .disable()
-        .authorizeHttpRequests()
-        .requestMatchers("/register/**")
-        .permitAll()
-        .and()
-        .authorizeHttpRequests()
-        .requestMatchers("/users/**")
-        .hasAnyAuthority("USER", "ADMIN")
-        .and()
-        .formLogin()
-        .and()
-        .build();
-  }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.cors()
+                .and()
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/register/**")
+                .permitAll()
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/users/**")
+                .hasAnyAuthority("USER", "ADMIN")
+                .and()
+                .formLogin()
+                .and()
+                .build();
+    }
 }

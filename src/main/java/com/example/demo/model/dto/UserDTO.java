@@ -2,10 +2,11 @@ package com.example.demo.model.dto;
 
 import com.example.demo.model.PersonalData;
 import com.example.demo.model.Role;
-import java.time.ZonedDateTime;
-import java.util.Set;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Data
 @Builder

@@ -3,10 +3,11 @@ package com.example.demo.model.dto;
 import com.example.demo.model.Paragraph;
 import com.example.demo.model.Post;
 import com.example.demo.model.Telephone;
-import java.time.LocalDate;
-import java.util.Set;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Builder

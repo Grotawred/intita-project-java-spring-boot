@@ -3,5 +3,5 @@ package com.example.demo.registration.token;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
-  VerificationToken findByToken(String token);
+    VerificationToken findByToken(String token);
 }

@@ -7,10 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,17 +19,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Paragraph {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "paragraph_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "paragraph_id")
+    private Long id;
 
-  @ManyToMany(mappedBy = "paragraphs")
-  private Set<PersonalData> personalData;
+    @ManyToMany(mappedBy = "paragraphs")
+    private Set<PersonalData> personalData;
 
-  @Column(name = "header")
-  private String header;
+    @Column(name = "header")
+    private String header;
 
-  @Column(name = "description")
-  private String description;
+    @Column(name = "description")
+    private String description;
 }
