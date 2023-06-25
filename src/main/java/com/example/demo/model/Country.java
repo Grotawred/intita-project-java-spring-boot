@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Country {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "county_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "county_id")
+    private Long id;
 
-  @OneToOne
-  @JoinColumn(name = "telephone_code_id")
-  private TelephoneCode telephoneCode;
+    @OneToOne
+    @JoinColumn(name = "telephone_code_id")
+    private TelephoneCode telephoneCode;
 
-  @Column(name = "name")
-  private String name;
+    @Column(name = "name")
+    private String name;
 }
