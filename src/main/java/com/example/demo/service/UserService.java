@@ -13,7 +13,7 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import static com.example.demo.constants.TextConstants.*;
 public class UserService implements IUserService {
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
@@ -49,7 +49,7 @@ public class UserService implements IUserService {
         var newUser =
                 User.builder()
                         .login(request.login())
-                        .password(passwordEncoder.encode(request.password()))
+//                        .password(passwordEncoder.encode(request.password()))
                         .roles(roleRepository.findRoleByName(request.role()))
                         .personalData(newUserData)
                         .registrationDateTime(java.time.ZonedDateTime.now())
