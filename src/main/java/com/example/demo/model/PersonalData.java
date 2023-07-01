@@ -1,15 +1,7 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -17,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @Entity
@@ -43,6 +33,28 @@ public class PersonalData {
             joinColumns = @JoinColumn(name = "personal_data_id"),
             inverseJoinColumns = @JoinColumn(name = "paragraph_id"))
     private Set<Paragraph> paragraphs;
+
+    @ManyToMany
+    @JoinTable(
+            name = "paragraph_tool_relations",
+            joinColumns = @JoinColumn(name = "peesona_data_id"),
+            inverseJoinColumns = @JoinColumn(name = "tool_id"))
+    private Set<Tool> tools;
+
+    @ManyToMany
+    @JoinTable(
+            name = "paragraph_skill_relations",
+            joinColumns = @JoinColumn(name = "personal_data_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private Set<Skill> skills;
+
+    @ManyToMany
+    @JoinTable(
+            name = "paragraph_task_relations",
+            joinColumns = @JoinColumn(name = "personal_data_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id"))
+    private Set<Task> tasks;
+
     @Column(name = "email")
     private String email;
     @Column(name = "first_name")
