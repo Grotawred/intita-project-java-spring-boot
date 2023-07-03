@@ -36,24 +36,31 @@ public class PersonalData {
 
     @ManyToMany
     @JoinTable(
-            name = "paragraph_tool_relations",
+            name = "personal_data_tool_relations",
             joinColumns = @JoinColumn(name = "peesona_data_id"),
             inverseJoinColumns = @JoinColumn(name = "tool_id"))
     private Set<Tool> tools;
 
     @ManyToMany
     @JoinTable(
-            name = "paragraph_skill_relations",
+            name = "personal_data_skill_relations",
             joinColumns = @JoinColumn(name = "personal_data_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills;
 
     @ManyToMany
     @JoinTable(
-            name = "paragraph_task_relations",
+            name = "personal_data_task_relations",
             joinColumns = @JoinColumn(name = "personal_data_id"),
             inverseJoinColumns = @JoinColumn(name = "task_id"))
     private Set<Task> tasks;
+
+    @ManyToMany
+    @JoinTable(
+            name = "personal_data_experience_relations",
+            joinColumns = @JoinColumn(name = "personal_data_id"),
+            inverseJoinColumns = @JoinColumn(name = "experience_id"))
+    private Set<Experience> experiences;
 
     @Column(name = "email")
     private String email;

@@ -1,11 +1,6 @@
 package com.example.demo.model.dto;
 
-import com.example.demo.model.Paragraph;
-import com.example.demo.model.Post;
-import com.example.demo.model.Skill;
-import com.example.demo.model.Task;
-import com.example.demo.model.Telephone;
-import com.example.demo.model.Tool;
+import com.example.demo.model.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,6 +17,7 @@ public class PersonalDataDTO {
     private Set<Tool> tools;
     private Set<Skill> skills;
     private Set<Task> tasks;
+    private Set<Experience> experiences;
     private String email;
     private String firstName;
     private String lastName;
