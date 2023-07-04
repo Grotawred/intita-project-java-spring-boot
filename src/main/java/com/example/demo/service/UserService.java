@@ -12,6 +12,7 @@ import com.example.demo.registration.token.VerificationTokenRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.serviceInterface.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.serviceInterface;
 
 import com.example.demo.model.User;
 import com.example.demo.model.dto.UserDTO;
