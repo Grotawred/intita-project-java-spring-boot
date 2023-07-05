@@ -12,7 +12,6 @@ import com.example.demo.registration.token.VerificationTokenRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.serviceInterface.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ import static com.example.demo.constants.TextConstants.*;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IUserService {
+public class UserService{
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,12 +32,12 @@ public class UserService implements IUserService {
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
 
-    @Override
+
     public List<UserDTO> getUsers() {
         return mapper.listOfUserToListOfUserDto(userRepository.findAll());
     }
 
-    @Override
+
     public User registerUser(RegistrationRequest request) {
         List<UserDTO> user = this.findByEmail(request.email());
         if (!user.isEmpty()) {
@@ -58,7 +57,7 @@ public class UserService implements IUserService {
         return userRepository.save(newUser);
     }
 
-    @Override
+
     public List<UserDTO> findByEmail(String email) {
         PersonalDataDTO userData =
                 mapper.personalDataToPersonalDataDto(userDataRepository.findByEmail(email));
@@ -71,13 +70,13 @@ public class UserService implements IUserService {
         return mapper.listOfUserToListOfUserDto(user);
     }
 
-    @Override
+
     public void saveUserVerificationToken(UserDTO theUser, String token) {
         var verificationToken = new VerificationToken(token, mapper.userDtoToUser(theUser));
         tokenRepository.save(verificationToken);
     }
 
-    @Override
+
     public String validateToken(String theToken) {
         VerificationToken token = tokenRepository.findByToken(theToken);
         if (token == null) {

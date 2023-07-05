@@ -4,21 +4,18 @@ import com.example.demo.model.dto.CountryDTO;
 import com.example.demo.model.dto.SkillDTO;
 import com.example.demo.model.dto.TelephoneCodeDTO;
 import com.example.demo.model.dto.ToolDTO;
-import com.example.demo.service.AdministratorService;
+import com.example.demo.service.ManagerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin")
-public class AdministratorController {
+@RequestMapping("/manager")
+public class ManagerController {
 
-    private final AdministratorService administratorService;
+    private final ManagerService administratorService;
 
 
     @GetMapping("/tools")
@@ -36,47 +33,47 @@ public class AdministratorController {
         return administratorService.getAllCountries();
     }
 
-    @GetMapping("/telephoneCodes")
+    @GetMapping("/telephone/codes")
     private List<TelephoneCodeDTO> getAllTelephoneCodes() {
         return administratorService.getAllTelephoneCodes();
     }
 
-    @PostMapping("/tool/create")
+    @PostMapping("/tools")
     private void createNewTool(ToolDTO toolDTO) {
         administratorService.setNewTool(toolDTO);
     }
 
-    @PostMapping("/skill/create")
+    @PostMapping("/skills")
     private void createNewSkill(SkillDTO skillDTO) {
         administratorService.setNewSkill(skillDTO);
     }
 
-    @PostMapping("/country/create")
+    @PostMapping("/countries")
     private void createNewCountry(CountryDTO countryDTO) {
         administratorService.setNewCountry(countryDTO);
     }
 
-    @PostMapping("/telephoneCode/create")
+    @PostMapping("/telephone/codes")
     private void createNewTool(TelephoneCodeDTO telephoneCodeDTO) {
         administratorService.setNewTelephoneCode(telephoneCodeDTO);
     }
 
-    @GetMapping("/tool/delete")
+    @DeleteMapping("/tools")
     private void deleteTool(ToolDTO toolDTO) {
         administratorService.deleteTool(toolDTO);
     }
 
-    @GetMapping("/skill/delete")
+    @DeleteMapping("/skills")
     private void deleteSkill(SkillDTO skillDTO) {
         administratorService.deleteSkill(skillDTO);
     }
 
-    @GetMapping("/country/delete")
+    @DeleteMapping("/countries")
     private void deleteCountry(CountryDTO countryDTO) {
         administratorService.deleteCountry(countryDTO);
     }
 
-    @GetMapping("/telephoneCode/delete")
+    @DeleteMapping("/telephone/codes")
     private void deleteTelephoneCode(TelephoneCodeDTO telephoneCodeDTO) {
         administratorService.deleteTelephoneCode(telephoneCodeDTO);
     }
