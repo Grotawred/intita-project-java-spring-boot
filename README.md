@@ -12,7 +12,7 @@ download the latest version, namely 20
   java -version
 ```
 - Download maven from Apache official site,
-  necessarily version 4
+  necessarily version 4.0.0
 
 
 - Add Maven to Environment variables as MAVEN_HOME
