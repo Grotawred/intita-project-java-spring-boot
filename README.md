@@ -24,7 +24,7 @@ download the latest version, namely 20
   mvn --version
 ```
 
-- Download MySQL installer from official website and select in installation configuration: Workbench (last version), Server (last version) and JConnector (last version)
+- Download MySQL installer from official website and select in installation configuration: Workbench (8.0.32), Server (8.0.32) and JConnector (8.0.32)
 
 
 - Clone the project
