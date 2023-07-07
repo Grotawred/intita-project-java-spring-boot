@@ -1,7 +1,6 @@
 # How to set up project
-- To begin with,
-  download the JavaSDK from the official Oracle website,
-  it does not matter which version you will download, the main thing is that it is there
+- First, download the Java SDK from the official Oracle website, 
+download the latest version, namely 20
 
 
 - Add Java to Environment variables as JAVA_HOME
@@ -12,9 +11,8 @@
 ```bash
   java -version
 ```
-- Download maven from the official Apache site,
-  again, it doesn't matter which version,
-  but the main thing is that it is
+- Download maven from Apache official site,
+  necessarily version 4
 
 
 - Add Maven to Environment variables as MAVEN_HOME
@@ -26,7 +24,7 @@
   mvn --version
 ```
 
-- Download MySQL installer from official website and select in installation configuration: Workbench, Server and JConnector
+- Download MySQL installer from official website and select in installation configuration: Workbench (last version), Server (last version) and JConnector (last version)
 
 
 - Clone the project
