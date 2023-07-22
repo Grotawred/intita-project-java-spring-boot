@@ -34,7 +34,4 @@ download the latest version, namely 20
 - Create new schema named "db_to_project" in your MySQL Workbench
 
 
-- Add the variables in .env file sent to you by the administrators to Environment Variables
-
-
 - Start project in your IDE
