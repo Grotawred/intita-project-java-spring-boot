@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${env.MYSQL_URL}
-    username: ${env.MYSQL_USERNAME}
-    password: ${env.MYSQL_PASSWORD}
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -11,8 +11,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${env.MAIL_USERNAME}
-    password: ${env.MAIL_PASSWORD}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
