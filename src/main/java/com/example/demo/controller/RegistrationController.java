@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.demo.constants.TextConstants.*;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/registration")
