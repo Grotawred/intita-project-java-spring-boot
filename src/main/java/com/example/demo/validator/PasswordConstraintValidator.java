@@ -15,10 +15,11 @@ import org.passay.RuleResult;
 import org.passay.SpecialCharacterRule;
 import org.passay.UppercaseCharacterRule;
 import org.passay.WhitespaceRule;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-
+@Component
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
     private final PasswordValidator validator = new PasswordValidator(Arrays.asList(
