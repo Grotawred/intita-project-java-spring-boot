@@ -21,6 +21,6 @@ public class TelephoneCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "telephone_code_id")
     private Long id;
-    @Column(name = "code")
+    @Column(name = "code") //
     private String code;
 }

@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.SwearWords.SwearWords;
+import com.example.demo.exception.LocalDateException;
+import com.example.demo.exception.SwearWordsException;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.entity.PersonalData;
@@ -12,13 +15,26 @@ import com.example.demo.repository.VerificationTokenRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
+//import com.example.demo.validators.ValidatorSwearWords;
+import com.example.demo.validators.ValidateContainSpecialSymbols;
+import com.example.demo.validators.ValidatorDateOfBirth;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uttesh.exude.exception.InvalidDataException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.apache.commons.lang.WordUtils;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.*;
 
 import static com.example.demo.constants.TextConstants.*;
 
@@ -31,8 +47,19 @@ public class UserService{
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
+    private final ValidatorDateOfBirth validatorDateOfBirth = new ValidatorDateOfBirth();
+    private final ValidateContainSpecialSymbols validatorContainSpecialSymbols = new ValidateContainSpecialSymbols();
+    private final SwearWords swearWords = new SwearWords() {
+        @Override
+        public LinkedList<String> getListOfSwearWords() {
+            return super.getListOfSwearWords();
+        }
+    };
 
 
+    public List<UserDTO> getUsers() {
+
+        return mapper.listOfUserToListOfUserDto(userRepository.findAll());
     public List<User> getUsers() {
         return userRepository.findAll();
     }
@@ -91,5 +118,53 @@ public class UserService{
         user.setVerified(true);
         userRepository.save(mapper.userDtoToUser(user));
         return VALID_MESSAGE;
+    }
+
+    @Override
+    public LocalDate validateLocalDate(LocalDate localDate, LocalDate personalDate) {
+        if(localDate == null) {
+            return personalDate;
+        } else{
+            return localDate;
+        }
+    }
+
+    @Override
+    public String validateInfo(String info, String personalInfo) {
+        if(info.isEmpty()) {
+            return personalInfo;
+        } else{
+            return info;
+        }
+    }
+
+    @Override
+    public String validateSwearWords(String info) throws SwearWordsException, IOException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        File file = new File("C:\\Users\\sasha\\Desktop\\intita-project-java-spring-boot — копия\\src\\main\\java\\com\\example\\demo\\SwearWords\\listOfSwearWords.json");
+
+        Object jsonSwearWords = mapper.readValue(file, Object.class);
+        List<Object> listOfSwearWords = Arrays.asList(jsonSwearWords);
+//        String listOfSwearWords = jsonSwearWords.toString();
+
+        info = info.toLowerCase();
+        for (Object i : listOfSwearWords) {
+            if (info.contains(i.toString())) {
+                throw new SwearWordsException("Bad Words in Data");
+            }
+        }
+        return WordUtils.capitalizeFully(info);
+
+    }
+
+    @Override
+    public LocalDate validateDateOfBirth(LocalDate localDate) throws LocalDateException {
+        return validatorDateOfBirth.execute(localDate);
+    }
+
+    @Override
+    public String validateSpecialSymbols(String info) throws InvalidDataException {
+        return validatorContainSpecialSymbols.execute(info);
     }
 }
