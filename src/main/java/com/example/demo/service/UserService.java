@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.SwearWords.SwearWords;
 import com.example.demo.exception.LocalDateException;
 import com.example.demo.exception.SwearWordsException;
 import com.example.demo.exception.UserAlreadyExistsException;
@@ -18,21 +17,21 @@ import com.example.demo.repository.UserRepository;
 //import com.example.demo.validators.ValidatorSwearWords;
 import com.example.demo.validators.ValidateContainSpecialSymbols;
 import com.example.demo.validators.ValidatorDateOfBirth;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uttesh.exude.exception.InvalidDataException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.WordUtils;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -49,12 +48,6 @@ public class UserService{
     private final RoleRepository roleRepository;
     private final ValidatorDateOfBirth validatorDateOfBirth = new ValidatorDateOfBirth();
     private final ValidateContainSpecialSymbols validatorContainSpecialSymbols = new ValidateContainSpecialSymbols();
-    private final SwearWords swearWords = new SwearWords() {
-        @Override
-        public LinkedList<String> getListOfSwearWords() {
-            return super.getListOfSwearWords();
-        }
-    };
 
 
     public List<UserDTO> getUsers() {
@@ -140,22 +133,17 @@ public class UserService{
 
     @Override
     public String validateSwearWords(String info) throws SwearWordsException, IOException, ParseException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        File file = new File("C:\\Users\\sasha\\Desktop\\intita-project-java-spring-boot — копия\\src\\main\\java\\com\\example\\demo\\SwearWords\\listOfSwearWords.json");
-
-        Object jsonSwearWords = mapper.readValue(file, Object.class);
-        List<Object> listOfSwearWords = Arrays.asList(jsonSwearWords);
-//        String listOfSwearWords = jsonSwearWords.toString();
-
+        ClassPathResource staticDataResource = new ClassPathResource("listOfSwearWords.json");
+        String staticDataString = IOUtils.toString(staticDataResource.getInputStream(), StandardCharsets.UTF_8);
+        Map<String, Object> listOfSwearWords = new JSONObject(staticDataString).toMap();
+        List<Object> listOfSwearWords2 = (List<Object>) listOfSwearWords.get("swearWords");
         info = info.toLowerCase();
-        for (Object i : listOfSwearWords) {
+        for (Object i : listOfSwearWords2) {
             if (info.contains(i.toString())) {
                 throw new SwearWordsException("Bad Words in Data");
             }
         }
         return WordUtils.capitalizeFully(info);
-
     }
 
     @Override
