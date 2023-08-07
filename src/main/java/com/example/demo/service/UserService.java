@@ -24,7 +24,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.WordUtils;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,7 @@ import static com.example.demo.constants.TextConstants.*;
 public class UserService{
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
@@ -53,24 +52,22 @@ public class UserService{
     public List<UserDTO> getUsers() {
 
         return mapper.listOfUserToListOfUserDto(userRepository.findAll());
-    public List<User> getUsers() {
-        return userRepository.findAll();
     }
 
 
     public User registerUser(RegistrationRequest request) {
-        List<UserDTO> user = this.findByEmail(request.getEmail());
+        List<UserDTO> user = this.findByEmail(request.email());
         if (!user.isEmpty()) {
             throw new UserAlreadyExistsException(
-                    USER_WITH_EMAIL_MESSAGE + request.getEmail() + ALREADY_EXIST_MESSAGE);
+                    USER_WITH_EMAIL_MESSAGE + request.email() + ALREADY_EXIST_MESSAGE);
         }
-        var newUserData = PersonalData.builder().email(request.getEmail()).build();
+        var newUserData = PersonalData.builder().email(request.email()).build();
         userDataRepository.save(newUserData);
         var newUser =
                 User.builder()
-                        .login(request.getLogin())
-                        .password(passwordEncoder.encode(request.getPassword()))
-                        .roles(roleRepository.findRoleByName(request.getRole()))
+                        .login(request.login())
+//                        .password(passwordEncoder.encode(request.password()))
+                        .roles(roleRepository.findRoleByName(request.role()))
                         .personalData(newUserData)
                         .registrationDateTime(java.time.ZonedDateTime.now())
                         .build();
