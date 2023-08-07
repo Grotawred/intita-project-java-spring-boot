@@ -1,6 +1,6 @@
 package com.example.demo.validators;
 
-import com.example.demo.registration.InfoRequest;
+import com.example.demo.requests.InfoRequest;
 
 public class ValidatorInfoNullable implements Validator {
 

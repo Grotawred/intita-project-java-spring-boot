@@ -1,9 +1,7 @@
 package com.example.demo.validators;
 
 
-import com.example.demo.registration.InfoRequest;
-
-import java.time.LocalDate;
+import com.example.demo.requests.InfoRequest;
 
 public class ValidatorDataNullable implements Validator {
 

@@ -5,7 +5,10 @@ import com.example.demo.model.User;
 import com.example.demo.model.dto.PersonalDataDTO;
 import com.example.demo.model.dto.TelephoneDTO;
 import com.example.demo.model.dto.UserDTO;
-import com.example.demo.registration.InfoRequest;
+import com.example.demo.requests.InfoRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.repository.TelephoneCodeRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.model.User;
@@ -43,7 +46,7 @@ public class UserController {
 
     @PostMapping("editInfo/{id}")
     public PersonalDataDTO editInfo (
-            @RequestBody InfoRequest infoRequest, @PathVariable Long id) throws InvalidDataException, IOException, ParseException {
+            @RequestBody InfoRequest infoRequest, @PathVariable Long id) throws InvalidDataException, IOException {
         Optional<User> user = userRepository.findById(id);
         PersonalDataDTO personalData = mapper.personalDataToPersonalDataDto(user.get().getPersonalData());
 

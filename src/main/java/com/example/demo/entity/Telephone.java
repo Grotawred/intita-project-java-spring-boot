@@ -27,6 +27,6 @@ public class Telephone {
     @JoinColumn(name = "telephone_code_id")
     private TelephoneCode telephoneCode;
 
-    @Column(name = "telephone") //
+    @Column(name = "telephone")
     private Long telephoneNumber;
 }
