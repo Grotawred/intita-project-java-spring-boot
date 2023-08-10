@@ -52,7 +52,7 @@ public class PaginationPagesTest {
 
         given(mainService.getAllPosts(any(Pageable.class))).willReturn(page);
 
-        mockMvc.perform(get("/main"))
+        mockMvc.perform(get("/home/posts"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(jsonPath("$.content[0].header", is("Title 1")))
