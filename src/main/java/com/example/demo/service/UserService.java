@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.PersonalData;
+import com.example.demo.model.ResetToken;
 import com.example.demo.model.User;
 import com.example.demo.model.dto.PersonalDataDTO;
 import com.example.demo.model.dto.UserDTO;
@@ -13,7 +14,7 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,10 +28,11 @@ import static com.example.demo.constants.TextConstants.*;
 public class UserService{
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
+    private final ResetTokenService resetTokenService;
 
 
     public List<User> getUsers() {
@@ -49,7 +51,8 @@ public class UserService{
         var newUser =
                 User.builder()
                         .login(request.login())
-                        .password(passwordEncoder.encode(request.password()))
+//                        .password(passwordEncoder.encode(request.password()))
+                        .password(request.password())
                         .roles(roleRepository.findRoleByName(request.role()))
                         .personalData(newUserData)
                         .registrationDateTime(java.time.ZonedDateTime.now())
@@ -69,7 +72,6 @@ public class UserService{
         }
         return mapper.listOfUserToListOfUserDto(user);
     }
-
 
     public void saveUserVerificationToken(UserDTO theUser, String token) {
         var verificationToken = new VerificationToken(token, mapper.userDtoToUser(theUser));
@@ -91,5 +93,14 @@ public class UserService{
         user.setVerified(true);
         userRepository.save(mapper.userDtoToUser(user));
         return VALID_MESSAGE;
+    }
+    public UserDTO getByResetToken(String token){
+       ResetToken resetToken = resetTokenService.getByToken(token);
+       User user = resetToken.getUser();
+       return mapper.userToUserDto(user);
+    }
+
+    public void save(UserDTO userDTO){
+        userRepository.save(mapper.userDtoToUser(userDTO));
     }
 }
