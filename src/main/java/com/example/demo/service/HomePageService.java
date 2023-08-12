@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MainService {
+public class HomePageService {
 
     private final PostRepository postRepository;
 

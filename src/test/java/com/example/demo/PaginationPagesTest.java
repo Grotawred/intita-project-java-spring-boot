@@ -1,8 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.controller.MainController;
+import com.example.demo.controller.HomePageController;
 import com.example.demo.model.Post;
-import com.example.demo.service.MainService;
+import com.example.demo.service.HomePageService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,10 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class PaginationPagesTest {
     @InjectMocks
-    private MainController mainController;
+    private HomePageController mainController;
 
     @Mock
-    private MainService mainService;
+    private HomePageService mainService;
 
     private MockMvc mockMvc;
 
@@ -51,6 +52,7 @@ public class PaginationPagesTest {
         Page<Post> page = new PageImpl<>(posts);
 
         given(mainService.getAllPosts(any(Pageable.class))).willReturn(page);
+//        when(mainService.getAllPosts(any(Pageable.class))).thenReturn(page);
 
         mockMvc.perform(get("/home/posts"))
                 .andExpect(status().isOk())
