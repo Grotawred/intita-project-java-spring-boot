@@ -103,4 +103,10 @@ public class UserService{
     public void save(UserDTO userDTO){
         userRepository.save(mapper.userDtoToUser(userDTO));
     }
+    public Boolean checkIfUserExistByEmail(String email){
+        return findByEmail(email) != null;
+    }
+    public Boolean checkIfUserExistByToken(String token){
+        return getByResetToken(token) != null;
+    }
 }

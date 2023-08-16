@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 import static com.example.demo.constants.TextConstants.*;
 
@@ -17,25 +18,38 @@ import static com.example.demo.constants.TextConstants.*;
 public class ResetTokenService {
     private final ResetTokenRepository resetTokenRepository;
     private final UserMapper mapper;
+    private final EmailService emailService;
 
-    public void createToken(String token, UserDTO userDTO){
-        User user = mapper.userDtoToUser(userDTO);
+    public void createAndSendResetLink(String email, String token){
+        String link = "http://localhost/reset_password?token=" + token;
+//          emailService.sendEmail(email, "Reset password", link);
 
-        ResetToken resetToken = new ResetToken(token, user);
-        resetTokenRepository.save(resetToken);
     }
 
-    public String validateToken(String theToken){
-        ResetToken token = resetTokenRepository.findByToken(theToken);
-        if (token == null) {
-            return INVALID_RESET_TOKEN_MESSAGE;
+    public void saveToken(String token, UserDTO userDTO){
+            User user = mapper.userDtoToUser(userDTO);
+            ResetToken resetToken = new ResetToken(token, user);
+            resetTokenRepository.save(resetToken);
+    }
+    public Boolean confirmPassword(String password, String confirmPassword){
+        return password.equals(confirmPassword);
+    }
+    public void deleteToken(String token){
+        ResetToken resetToken = resetTokenRepository.findByToken(token);
+        resetTokenRepository.delete(resetToken);
+    }
+
+    public Boolean validateToken(String token){
+        ResetToken resetToken = resetTokenRepository.findByToken(token);
+        if (resetToken == null) {
+            return false;
         }
         Calendar calendar = Calendar.getInstance();
-        if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
-            resetTokenRepository.delete(token);
-            return RESET_TOKEN_ALREADY_EXPIRED_MESSAGE;
+        if ((resetToken.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
+            resetTokenRepository.delete(resetToken);
+            return false;
         }
-        return RESET_TOKEN_VALID_MESSAGE;
+        return true;
     }
     public ResetToken getByToken(String token){
         return resetTokenRepository.findByToken(token);
