@@ -33,8 +33,8 @@ public class UserService{
     private final RoleRepository roleRepository;
 
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getUsers() {
+        return mapper.listOfUserToListOfUserDto(userRepository.findAll());
     }
 
 

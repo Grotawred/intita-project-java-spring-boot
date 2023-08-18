@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.model.dto.UserDTO;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public class UserController {
     @GetMapping
     public String getUsers(Model model) {
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserDTO());
         return "index";
     }
 }

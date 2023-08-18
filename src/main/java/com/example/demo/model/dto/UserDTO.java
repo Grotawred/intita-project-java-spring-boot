@@ -2,14 +2,19 @@ package com.example.demo.model.dto;
 
 import com.example.demo.model.PersonalData;
 import com.example.demo.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Tolerate;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
 
-@Data
+@AllArgsConstructor
 @Builder
+@Data
+@NoArgsConstructor
 public class UserDTO {
     private Long id;
     private Set<Role> roles;
