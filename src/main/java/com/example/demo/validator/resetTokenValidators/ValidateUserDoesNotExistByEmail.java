@@ -12,7 +12,7 @@ public class ValidateUserDoesNotExistByEmail implements UserValidator {
 
     @Override
     public void execute(String email) {
-        if (userService.checkIfUserExistByEmail(email)){
+        if (userService.checkIfUserExistByEmail(email)){ //TODO userExists
             throw new UserDoesNotExistByEmail("this email is not used");
         }
     }
