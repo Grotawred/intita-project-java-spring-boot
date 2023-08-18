@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.validator;
 
 import com.example.demo.validator.PasswordConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

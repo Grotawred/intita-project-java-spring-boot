@@ -1,6 +1,5 @@
-package com.example.demo;
+package com.example.demo.controller;
 
-import com.example.demo.controller.HomePageController;
 import com.example.demo.model.Post;
 import com.example.demo.service.HomePageService;
 import org.junit.Before;
@@ -22,13 +21,12 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PaginationPagesTest {
+public class HomePageController {
     @InjectMocks
     private HomePageController mainController;
 
