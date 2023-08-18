@@ -11,6 +11,7 @@ public interface TextConstants {
             "Email verified successfully. Now you can login to your account";
 
     String INVALID_VERIFICATION_TOKEN_LOG_MESSAGE = "Invalid verification token";
+    String INVALID_RESET_TOKEN_MESSAGE = "Invalid reset token";
 
     String USER_NOT_FOUND_MESSAGE = "User not found";
 
@@ -19,6 +20,8 @@ public interface TextConstants {
     String ALREADY_EXIST_MESSAGE = " already exists";
 
     String TOKEN_ALREADY_EXPIRED_MESSAGE = "Token already expired";
+    String RESET_TOKEN_ALREADY_EXPIRED_MESSAGE = "Link is already expired";
 
     String VALID_MESSAGE = "valid";
+    String RESET_TOKEN_VALID_MESSAGE = "valid";
 }

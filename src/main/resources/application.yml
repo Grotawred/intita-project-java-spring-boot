@@ -17,8 +17,9 @@ spring:
       mail:
         smtp:
           auth: true
-        starttls:
-          enable: true
+          starttls:
+            enable: true
+
 server:
   port: 8080
 spring-doc:
