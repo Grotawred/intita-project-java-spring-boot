@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.ResetTokenService;
+import com.example.demo.service.*;
 import com.example.demo.model.dto.UserDTO;
-import com.example.demo.service.UserService;
-import com.example.demo.validator.PasswordConstraintValidator;
+import com.example.demo.service.validatorService.PasswordsValidatorService;
+import com.example.demo.service.validatorService.ResetTokenValidatorService;
+import com.example.demo.service.validatorService.UserValidatorService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,36 +20,38 @@ public class ForgotPasswordController {
 
     private final UserService userService;
     private final ResetTokenService resetTokenService;
-    private final PasswordConstraintValidator passwordConstraintValidator;
+    private final ResetTokenValidatorService resetTokenValidatorService;
+    private final UserValidatorService userValidatorService;
+    private final PasswordsValidatorService passwordsValidatorService;
 
     @GetMapping("/forgot_password")
     private String processForgotPasswordPage() {
-        return "html_page";
+        return "index";
     }
 
     @PostMapping("/forgot_password")
     private String processForgotPassword(HttpServletRequest httpServletRequest) {
         String email = httpServletRequest.getParameter("email");
         String token = UUID.randomUUID().toString();
-        List<UserDTO> userDTO = userService.findByEmail(email);
 
-        if (userService.checkIfUserExistByEmail(email)) {
-            resetTokenService.saveToken(token, userDTO.get(0));
-            resetTokenService.createAndSendResetLink(email, token);
-            return "html_page";
-        }
-        return "html_page_error";
+        userValidatorService.executeUserDoesNotExist(email);
+        userValidatorService.executeUser(email);
+
+        List<UserDTO> userDTO = userService.findByEmail(email);
+        resetTokenService.saveToken(token, userDTO.get(0));
+        resetTokenService.createAndSendResetLink(email, token);
+
+        return "index";
     }
 
     @GetMapping("/reset_password")
     private String processResetPasswordPage(HttpServletRequest request) {
         String token = request.getParameter("token");
 
-        if (userService.checkIfUserExistByToken(token)
-                && resetTokenService.validateToken(token)) {
-            return "html_page";
-        }
-        return "html_page_error";
+        resetTokenValidatorService.resetTokenIsNull(token);
+        resetTokenValidatorService.executeResetToken(token);
+
+        return "index";
     }
 
     @PostMapping("/reset_password")
@@ -58,17 +60,10 @@ public class ForgotPasswordController {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
+        resetTokenValidatorService.resetTokenIsNull(token);
+        resetTokenValidatorService.executeResetToken(token);
+        passwordsValidatorService.executeResetToken(password, confirmPassword);
 
-        if (userService.checkIfUserExistByToken(token) && resetTokenService.validateToken(token)) {
-            if (resetTokenService.confirmPassword(password, confirmPassword)) {
-                UserDTO userDTO = userService.getByResetToken(token);
-                userDTO.setPassword(password);
-                userService.save(userDTO);
-                resetTokenService.deleteToken(token);
-
-            }
-            return "html_page";
-        }
-        return "html_page_error";
+        return "index";
     }
 }

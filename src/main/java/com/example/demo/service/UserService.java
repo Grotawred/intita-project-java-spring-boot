@@ -25,10 +25,10 @@ import static com.example.demo.constants.TextConstants.*;
 
 @Service
 @RequiredArgsConstructor
-public class UserService{
+public class UserService {
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    //    private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
@@ -94,19 +94,26 @@ public class UserService{
         userRepository.save(mapper.userDtoToUser(user));
         return VALID_MESSAGE;
     }
-    public UserDTO getByResetToken(String token){
-       ResetToken resetToken = resetTokenService.getByToken(token);
-       User user = resetToken.getUser();
-       return mapper.userToUserDto(user);
+
+    public UserDTO getByResetToken(String token) {
+        ResetToken resetToken = resetTokenService.getByToken(token);
+        User user = resetToken.getUser();
+        return mapper.userToUserDto(user);
     }
 
-    public void save(UserDTO userDTO){
+    public void save(UserDTO userDTO) {
         userRepository.save(mapper.userDtoToUser(userDTO));
     }
-    public Boolean checkIfUserExistByEmail(String email){
-        return findByEmail(email) != null;
+
+    public Boolean checkIfUserExistByEmail(String email) {
+        List<UserDTO> users = findByEmail(email);
+        return users.isEmpty();
     }
-    public Boolean checkIfUserExistByToken(String token){
-        return getByResetToken(token) != null;
+
+    public void saveNewPassword(String token, String password) {
+        UserDTO userDTO = getByResetToken(token);
+        userDTO.setPassword(password);
+        save(userDTO);
+        resetTokenService.deleteToken(token);
     }
 }
