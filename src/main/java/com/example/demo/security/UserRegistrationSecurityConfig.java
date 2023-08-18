@@ -31,6 +31,10 @@ public class UserRegistrationSecurityConfig {
                 .requestMatchers("/users/**")
                 .hasAnyAuthority("USER", "ADMIN")
                 .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/manager/**")
+                .hasAnyAuthority("ADMIN")
+                .and()
                 .formLogin()
                 .and()
                 .build();
