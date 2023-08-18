@@ -2,7 +2,6 @@ package com.example.demo.validator.resetTokenValidators;
 
 import com.example.demo.exception.resetTokenExceptions.PasswordsDoNotMatch;
 import com.example.demo.service.ResetTokenService;
-import com.example.demo.validator.resetTokenValidators.PasswordsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
