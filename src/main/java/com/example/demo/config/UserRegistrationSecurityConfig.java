@@ -24,7 +24,7 @@ public class UserRegistrationSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/register/**")
+                .requestMatchers("/registration/**")
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
