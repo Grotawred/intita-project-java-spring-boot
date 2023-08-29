@@ -1,6 +1,6 @@
-package com.example.demo.entity;
+package com.example.demo.registration.token;
 
-import com.example.demo.entity.User;
+import com.example.demo.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +13,7 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
