@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.mapper.AchievementMapper;
-import com.example.demo.model.dto.CountryDTO;
-import com.example.demo.model.dto.SkillDTO;
-import com.example.demo.model.dto.TelephoneCodeDTO;
-import com.example.demo.model.dto.ToolDTO;
+import com.example.demo.entity.dto.CountryDTO;
+import com.example.demo.entity.dto.SkillDTO;
+import com.example.demo.entity.dto.TelephoneCodeDTO;
+import com.example.demo.entity.dto.ToolDTO;
 import com.example.demo.repository.CountryRepository;
 import com.example.demo.repository.SkillRepository;
 import com.example.demo.repository.TelephoneCodeRepository;

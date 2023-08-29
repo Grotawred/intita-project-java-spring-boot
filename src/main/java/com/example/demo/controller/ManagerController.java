@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.dto.CountryDTO;
-import com.example.demo.model.dto.SkillDTO;
-import com.example.demo.model.dto.TelephoneCodeDTO;
-import com.example.demo.model.dto.ToolDTO;
+import com.example.demo.entity.dto.CountryDTO;
+import com.example.demo.entity.dto.SkillDTO;
+import com.example.demo.entity.dto.TelephoneCodeDTO;
+import com.example.demo.entity.dto.ToolDTO;
 import com.example.demo.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

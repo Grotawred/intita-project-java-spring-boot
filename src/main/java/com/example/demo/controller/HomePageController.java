@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Post;
+import com.example.demo.entity.Post;
 import com.example.demo.service.HomePageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

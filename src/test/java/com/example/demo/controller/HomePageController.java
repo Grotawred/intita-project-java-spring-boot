@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Post;
+import com.example.demo.entity.Post;
 import com.example.demo.service.HomePageService;
 import org.junit.Before;
 import org.junit.Test;

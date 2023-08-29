@@ -2,7 +2,7 @@ package com.example.demo.event.listener;
 
 import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.model.dto.UserDTO;
+import com.example.demo.entity.dto.UserDTO;
 import com.example.demo.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
