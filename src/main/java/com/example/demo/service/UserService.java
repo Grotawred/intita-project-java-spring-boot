@@ -39,18 +39,18 @@ public class UserService{
 
 
     public User registerUser(RegistrationRequest request) {
-        List<UserDTO> user = this.findByEmail(request.email());
+        List<UserDTO> user = this.findByEmail(request.getEmail());
         if (!user.isEmpty()) {
             throw new UserAlreadyExistsException(
-                    USER_WITH_EMAIL_MESSAGE + request.email() + ALREADY_EXIST_MESSAGE);
+                    USER_WITH_EMAIL_MESSAGE + request.getEmail() + ALREADY_EXIST_MESSAGE);
         }
-        var newUserData = PersonalData.builder().email(request.email()).build();
+        var newUserData = PersonalData.builder().email(request.getEmail()).build();
         userDataRepository.save(newUserData);
         var newUser =
                 User.builder()
-                        .login(request.login())
-                        .password(passwordEncoder.encode(request.password()))
-                        .roles(roleRepository.findRoleByName(request.role()))
+                        .login(request.getLogin())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .roles(roleRepository.findRoleByName(request.getRole()))
                         .personalData(newUserData)
                         .registrationDateTime(java.time.ZonedDateTime.now())
                         .build();
