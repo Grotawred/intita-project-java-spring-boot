@@ -26,7 +26,7 @@ public class RegistrationController {
     public String registerUser(
             @RequestBody RegistrationRequest registrationRequest, final HttpServletRequest request) {
         User user = userService.registerUser(registrationRequest);
-        String email = registrationRequest.email();
+        String email = registrationRequest.getEmail();
         publisher.publishEvent(new RegistrationCompleteEvent(user, URLUtilis.applicationUrl(request), email));
         return EMAIL_VERIFICATION_COMPLETE_MESSAGE;
     }
