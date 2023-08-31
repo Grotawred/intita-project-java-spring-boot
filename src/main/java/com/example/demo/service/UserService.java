@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.exception.LocalDateException;
-import com.example.demo.exception.SwearWordsException;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.entity.PersonalData;
@@ -14,21 +12,13 @@ import com.example.demo.repository.VerificationTokenRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.validators.ValidateContainSpecialSymbols;
-import com.example.demo.validators.ValidatorDateOfBirth;
-import com.uttesh.exude.exception.InvalidDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.WordUtils;
-import org.json.JSONObject;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static com.example.demo.constants.TextConstants.*;
 
@@ -41,29 +31,26 @@ public class UserService{
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
-    private final ValidatorDateOfBirth validatorDateOfBirth = new ValidatorDateOfBirth();
-    private final ValidateContainSpecialSymbols validatorContainSpecialSymbols = new ValidateContainSpecialSymbols();
 
 
-    public List<UserDTO> getUsers() {
-
-        return mapper.listOfUserToListOfUserDto(userRepository.findAll());
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
 
     public User registerUser(RegistrationRequest request) {
-        List<UserDTO> user = this.findByEmail(request.email());
+        List<UserDTO> user = this.findByEmail(request.getEmail());
         if (!user.isEmpty()) {
             throw new UserAlreadyExistsException(
-                    USER_WITH_EMAIL_MESSAGE + request.email() + ALREADY_EXIST_MESSAGE);
+                    USER_WITH_EMAIL_MESSAGE + request.getEmail() + ALREADY_EXIST_MESSAGE);
         }
-        var newUserData = PersonalData.builder().email(request.email()).build();
+        var newUserData = PersonalData.builder().email(request.getEmail()).build();
         userDataRepository.save(newUserData);
         var newUser =
                 User.builder()
-                        .login(request.login())
-//                        .password(passwordEncoder.encode(request.password()))
-                        .roles(roleRepository.findRoleByName(request.role()))
+                        .login(request.getLogin())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .roles(roleRepository.findRoleByName(request.getRole()))
                         .personalData(newUserData)
                         .registrationDateTime(java.time.ZonedDateTime.now())
                         .build();
@@ -104,45 +91,5 @@ public class UserService{
         user.setVerified(true);
         userRepository.save(mapper.userDtoToUser(user));
         return VALID_MESSAGE;
-    }
-
-
-    public LocalDate validateLocalDate(LocalDate localDate, LocalDate personalDate) {
-        if(localDate == null) {
-            return personalDate;
-        } else{
-            return localDate;
-        }
-    }
-
-
-    public String validateInfo(String info, String personalInfo) {
-        if(info.isEmpty()) {
-            return personalInfo;
-        } else{
-            return info;
-        }
-    }
-
-    public String validateSwearWords(String info) throws SwearWordsException, IOException {
-        ClassPathResource staticDataResource = new ClassPathResource("listOfSwearWords.json");
-        String staticDataString = IOUtils.toString(staticDataResource.getInputStream(), StandardCharsets.UTF_8);
-        Map<String, Object> listOfSwearWords = new JSONObject(staticDataString).toMap();
-        List<Object> listOfSwearWords2 = (List<Object>) listOfSwearWords.get("swearWords");
-        info = info.toLowerCase();
-        for (Object i : listOfSwearWords2) {
-            if (info.contains(i.toString())) {
-                throw new SwearWordsException("Bad Words in Data");
-            }
-        }
-        return WordUtils.capitalizeFully(info);
-    }
-
-    public LocalDate validateDateOfBirth(LocalDate localDate) throws LocalDateException {
-        return validatorDateOfBirth.execute(localDate);
-    }
-
-    public String validateSpecialSymbols(String info) throws InvalidDataException {
-        return validatorContainSpecialSymbols.execute(info);
     }
 }
