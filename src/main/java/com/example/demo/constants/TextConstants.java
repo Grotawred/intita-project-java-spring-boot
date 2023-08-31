@@ -21,4 +21,17 @@ public interface TextConstants {
     String TOKEN_ALREADY_EXPIRED_MESSAGE = "Token already expired";
 
     String VALID_MESSAGE = "valid";
+
+    String BAD_WORDS_IN_DATA_MESSAGE = "Bad words in Data";
+
+    String INVALID_DATE_OF_BIRTH_MESSAGE = "Invalid Date Of Birth";
+
+    String JSON_FILE_NAME = "src/main/resources/swear.json";
+
+    String SPECIAL_SYMBOLS_IN_DATA_MESSAGE = "Special Symbols in Data";
+
+    String SPECIAL_SYMBOLS_STRING = "1234567890-=+_)(*&^%$#@!\\|/}{[]?.><,№'\"";
+
+    String JSON_KEY = "swearWords";
+
 }

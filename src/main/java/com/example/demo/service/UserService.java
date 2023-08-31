@@ -14,19 +14,15 @@ import com.example.demo.repository.VerificationTokenRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
-//import com.example.demo.validators.ValidatorSwearWords;
 import com.example.demo.validators.ValidateContainSpecialSymbols;
 import com.example.demo.validators.ValidatorDateOfBirth;
 import com.uttesh.exude.exception.InvalidDataException;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.WordUtils;
 import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -41,7 +37,7 @@ import static com.example.demo.constants.TextConstants.*;
 public class UserService{
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
@@ -110,7 +106,7 @@ public class UserService{
         return VALID_MESSAGE;
     }
 
-    @Override
+
     public LocalDate validateLocalDate(LocalDate localDate, LocalDate personalDate) {
         if(localDate == null) {
             return personalDate;
@@ -119,7 +115,7 @@ public class UserService{
         }
     }
 
-    @Override
+
     public String validateInfo(String info, String personalInfo) {
         if(info.isEmpty()) {
             return personalInfo;
@@ -128,8 +124,7 @@ public class UserService{
         }
     }
 
-    @Override
-    public String validateSwearWords(String info) throws SwearWordsException, IOException, ParseException {
+    public String validateSwearWords(String info) throws SwearWordsException, IOException {
         ClassPathResource staticDataResource = new ClassPathResource("listOfSwearWords.json");
         String staticDataString = IOUtils.toString(staticDataResource.getInputStream(), StandardCharsets.UTF_8);
         Map<String, Object> listOfSwearWords = new JSONObject(staticDataString).toMap();
@@ -143,12 +138,10 @@ public class UserService{
         return WordUtils.capitalizeFully(info);
     }
 
-    @Override
     public LocalDate validateDateOfBirth(LocalDate localDate) throws LocalDateException {
         return validatorDateOfBirth.execute(localDate);
     }
 
-    @Override
     public String validateSpecialSymbols(String info) throws InvalidDataException {
         return validatorContainSpecialSymbols.execute(info);
     }
