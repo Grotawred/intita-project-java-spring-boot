@@ -53,7 +53,7 @@ public class UserController {
         PersonalDataDTO personalData = mapper.personalDataToPersonalDataDto(listOfPersonalData.get(0));
         TelephoneDTO newTelephoneDTO = userService.TelephoneDTOBuilder(infoRequest);
         PersonalDataDTO newPersonalDataDTO = userService.PersonalDataDTOBuilder(mapper.personalDataDtoToPersonalData(personalData), infoRequest, newTelephoneDTO);
-        users.orElseThrow().setPersonalData(mapper.personalDataDtoToPersonalData(newPersonalDataDTO));
+        users.get().setPersonalData(mapper.personalDataDtoToPersonalData(newPersonalDataDTO));
 
         return newPersonalDataDTO;
     }
