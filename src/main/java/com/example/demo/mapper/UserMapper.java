@@ -1,9 +1,9 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.PersonalData;
-import com.example.demo.model.User;
-import com.example.demo.model.dto.PersonalDataDTO;
-import com.example.demo.model.dto.UserDTO;
+import com.example.demo.entity.PersonalData;
+import com.example.demo.entity.User;
+import com.example.demo.entity.dto.PersonalDataDTO;
+import com.example.demo.entity.dto.UserDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;

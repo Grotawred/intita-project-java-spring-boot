@@ -1,13 +1,13 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.Country;
-import com.example.demo.model.Skill;
-import com.example.demo.model.TelephoneCode;
-import com.example.demo.model.Tool;
-import com.example.demo.model.dto.CountryDTO;
-import com.example.demo.model.dto.SkillDTO;
-import com.example.demo.model.dto.TelephoneCodeDTO;
-import com.example.demo.model.dto.ToolDTO;
+import com.example.demo.entity.Country;
+import com.example.demo.entity.Skill;
+import com.example.demo.entity.TelephoneCode;
+import com.example.demo.entity.Tool;
+import com.example.demo.entity.dto.CountryDTO;
+import com.example.demo.entity.dto.SkillDTO;
+import com.example.demo.entity.dto.TelephoneCodeDTO;
+import com.example.demo.entity.dto.ToolDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;
