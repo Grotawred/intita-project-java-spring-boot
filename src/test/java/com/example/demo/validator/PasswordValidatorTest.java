@@ -1,15 +1,16 @@
 package com.example.demo.validator;
 
-import com.example.demo.validator.PasswordConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @SpringBootTest
@@ -23,10 +24,10 @@ public class PasswordValidatorTest {
   @BeforeEach
   public void setUp(){
     validator = new PasswordConstraintValidator();
-    context = Mockito.mock(ConstraintValidatorContext.class);
-    ConstraintValidatorContext.ConstraintViolationBuilder builder = Mockito.mock(ConstraintValidatorContext.ConstraintViolationBuilder.class);
-    Mockito.when(context.buildConstraintViolationWithTemplate(Mockito.anyString())).thenReturn(builder);
-    Mockito.when(builder.addConstraintViolation()).thenReturn(context);
+    context = mock(ConstraintValidatorContext.class);
+    ConstraintValidatorContext.ConstraintViolationBuilder builder = mock(ConstraintValidatorContext.ConstraintViolationBuilder.class);
+    when(context.buildConstraintViolationWithTemplate(Mockito.anyString())).thenReturn(builder);
+    when(builder.addConstraintViolation()).thenReturn(context);
   }
 
   @ParameterizedTest
