@@ -22,5 +22,19 @@
     </tr>
     </tbody>
 </table>
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>User firstname</th>
+        <th>User lastname</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="personalData: ${personal_data}">
+        <td th:text="${personalData.firstName}"></td>
+        <td th:text="${personalData.lastName}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

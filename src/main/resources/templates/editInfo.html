@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center">Update Account</h1>
+            <div class="card-body">
+
+                <form method="POST" name="newPersonalData" th:object="${personalData}">
+
+                    <div class="form-group">
+                        <label>Edit First Name</label>
+                        <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="Entry New First Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Edit Last Name</label>
+                        <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Entry New Last Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Edit Date Of Birth</label>
+                        <input type="date" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Edit Telephone</label>
+                        <input type="text" name="telephoneNumber" th:field="*{telephone.telephoneNumber}" class="form-control">
+
+                        <label for="telephoneCode">Edit TelephoneCode</label>
+                        <select id="telephoneCode" name="telephoneCode">
+                            <option th:each="telephoneCode: ${telephone_codes}"
+                                    th:value="${telephoneCode.code}"
+                                    th:text="${telephoneCode.code}"
+                                    th:field="*{telephone.telephoneCode.code}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
