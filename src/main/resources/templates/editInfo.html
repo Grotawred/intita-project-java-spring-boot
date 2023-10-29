@@ -18,31 +18,30 @@
 
                     <div class="form-group">
                         <label>Edit First Name</label>
-                        <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="Entry New First Name">
+                        <input type="text" name="firstName" th:field="${personal_data.firstName}" class="form-control" placeholder="Entry New First Name">
                     </div>
 
                     <div class="form-group">
                         <label>Edit Last Name</label>
-                        <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Entry New Last Name">
+                        <input type="text" name="lastName" th:field="${personal_data.lastName}" class="form-control" placeholder="Entry New Last Name">
                     </div>
 
                     <div class="form-group">
                         <label>Edit Date Of Birth</label>
-                        <input type="date" name="dateOfBirth" th:field="*{dateOfBirth}" class="form-control">
+                        <input type="date" name="dateOfBirth" th:field="${personal_data.dateOfBirth}" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label>Edit Telephone</label>
-                        <input type="text" name="telephoneNumber" th:field="*{telephone.telephoneNumber}" class="form-control">
-
-                        <label for="telephoneCode">Edit TelephoneCode</label>
-                        <select id="telephoneCode" name="telephoneCode">
-                            <option th:each="telephoneCode: ${telephone_codes}"
-                                    th:value="${telephoneCode.code}"
-                                    th:text="${telephoneCode.code}"
-                                    th:field="*{telephone.telephoneCode.code}">
+                        <label for="telephoneCode">Edit Telephone</label>
+                        <select id="telephoneCode" th:field="${personal_data.telephone.telephoneCode.code}">
+                            <option name="telephoneCode"
+                                    th:each="telephone_code: ${telephone_codes}"
+                                    th:value="${telephone_code.code}"
+                                    th:text="${telephone_code.code}"
+                                    th:field="${personal_data.telephone.telephoneCode.code}">
                             </option>
                         </select>
+                        <input type="text" name="telephoneNumber" th:field="${personal_data.telephone.telephoneNumber}" class="form-control">
                     </div>
 
                     <div class="box-footer">
