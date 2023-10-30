@@ -1,6 +1,5 @@
-package com.example.demo.registration.token;
+package com.example.demo.entity;
 
-import com.example.demo.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,19 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.TelephoneCode;
+import com.example.demo.entity.VerificationToken;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.model.PersonalData;
-import com.example.demo.model.TelephoneCode;
-import com.example.demo.model.User;
-import com.example.demo.model.dto.PersonalDataDTO;
-import com.example.demo.model.dto.UserDTO;
-import com.example.demo.registration.RegistrationRequest;
-import com.example.demo.registration.token.VerificationToken;
-import com.example.demo.registration.token.VerificationTokenRepository;
-import com.example.demo.repository.RoleRepository;
-import com.example.demo.repository.TelephoneCodeRepository;
-import com.example.demo.repository.UserDataRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.entity.PersonalData;
+import com.example.demo.entity.User;
+import com.example.demo.entity.dto.PersonalDataDTO;
+import com.example.demo.entity.dto.UserDTO;
+import com.example.demo.repository.*;
+import com.example.demo.request.RegistrationRequest;
 import com.example.demo.validator.PersonalDataValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,13 +25,13 @@ import static com.example.demo.constants.TextConstants.*;
 @RequiredArgsConstructor
 public class UserService{
     private final UserDataRepository userDataRepository;
+    private final TelephoneCodeRepository telephoneCodeRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final VerificationTokenRepository tokenRepository;
+    private final PersonalDataValidator personalDataValidator;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
-    private final TelephoneCodeRepository telephoneCodeRepository;
-    private final PersonalDataValidator personalDataValidator;
+    private final VerificationTokenRepository tokenRepository;
 
 
     public List<User> getUsers() {

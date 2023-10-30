@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.VerificationToken;
 import com.example.demo.event.RegistrationCompleteEvent;
 import com.example.demo.entity.User;
 import com.example.demo.request.RegistrationRequest;
-import com.example.demo.entity.VerificationToken;
 import com.example.demo.repository.VerificationTokenRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.util.URLUtilis;

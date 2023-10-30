@@ -1,6 +1,6 @@
 package com.example.demo.validator;
 
-import com.example.demo.model.PersonalData;
+import com.example.demo.entity.PersonalData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

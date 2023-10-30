@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.PersonalData;
-import com.example.demo.model.TelephoneCode;
-import com.example.demo.model.User;
+import com.example.demo.entity.PersonalData;
+import com.example.demo.entity.TelephoneCode;
+import com.example.demo.entity.User;
 
 import com.example.demo.repository.TelephoneCodeRepository;
 import com.example.demo.repository.UserDataRepository;
