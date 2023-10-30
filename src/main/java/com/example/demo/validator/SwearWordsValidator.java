@@ -1,25 +1,17 @@
 package com.example.demo.validator;
 
+import com.example.demo.exception.SwearWordsException;
 import com.example.demo.util.JSONUtilis;
-import com.example.demo.validator.annotation.ValidSwearWords;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 import static com.example.demo.constants.TextConstants.*;
 
-public class SwearWordsValidator implements ConstraintValidator<ValidSwearWords, String> {
+@Component
+public class SwearWordsValidator {
 
-    @Override
-    public void initialize(ValidSwearWords constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
-
-
-    @Override
-    public boolean isValid(String name, ConstraintValidatorContext context) {
-        boolean isValid = true;
+    public String isValid(String name) {
 
         ArrayList<String> arrSwearWords = JSONUtilis.parse(JSONUtilis.read(JSON_FILE_NAME, JSON_KEY));
 
@@ -27,9 +19,10 @@ public class SwearWordsValidator implements ConstraintValidator<ValidSwearWords,
 
         for(String i : arrSwearWords) {
             if(name.contains(i)) {
-                isValid = false;
+                throw new SwearWordsException("Bad Words in Data");
             }
         }
 
-        return isValid;
-} }
+        return name;
+    }
+}

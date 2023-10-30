@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.PersonalData;
 import com.example.demo.model.TelephoneCode;
 import com.example.demo.model.User;
@@ -16,6 +15,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,6 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserDataRepository userDataRepository;
     private final TelephoneCodeRepository telephoneCodeRepository;
-    private final UserMapper mapper;
 
     @GetMapping
     public String getUsers(Model model) {
@@ -53,16 +52,7 @@ public class UserController {
     public String editInfo (@ModelAttribute("personalData") PersonalData personalData, @PathVariable Long id) {
 
         PersonalData exitingPersonalData = userRepository.findById(id).get().getPersonalData();
-        TelephoneCode newTelephoneCode = telephoneCodeRepository.findByCode(personalData.getTelephone().getTelephoneCode().getCode());
-
-        exitingPersonalData.setFirstName(personalData.getFirstName());
-
-        exitingPersonalData.setLastName(personalData.getLastName());
-        exitingPersonalData.setDateOfBirth(personalData.getDateOfBirth());
-        exitingPersonalData.getTelephone().setTelephoneNumber(personalData.getTelephone().getTelephoneNumber());
-        exitingPersonalData.getTelephone().setTelephoneCode(newTelephoneCode);
-
-        userDataRepository.save(exitingPersonalData);
+        userService.savePersonalData(exitingPersonalData, personalData);
 
         return "redirect:/users";
     }

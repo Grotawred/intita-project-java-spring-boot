@@ -41,7 +41,7 @@
                                     th:field="${personal_data.telephone.telephoneCode.code}">
                             </option>
                         </select>
-                        <input type="text" name="telephoneNumber" th:field="${personal_data.telephone.telephoneNumber}" class="form-control">
+                        <input minlength="7" maxlength="12" type="tel" name="telephoneNumber" th:field="${personal_data.telephone.telephoneNumber}" class="form-control">
                     </div>
 
                     <div class="box-footer">

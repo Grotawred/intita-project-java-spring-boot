@@ -2,18 +2,21 @@ package com.example.demo.service;
 
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.entity.PersonalData;
-import com.example.demo.entity.User;
-import com.example.demo.entity.dto.PersonalDataDTO;
-import com.example.demo.entity.dto.UserDTO;
-import com.example.demo.request.RegistrationRequest;
-import com.example.demo.entity.VerificationToken;
-import com.example.demo.repository.VerificationTokenRepository;
+import com.example.demo.model.PersonalData;
+import com.example.demo.model.TelephoneCode;
+import com.example.demo.model.User;
+import com.example.demo.model.dto.PersonalDataDTO;
+import com.example.demo.model.dto.UserDTO;
+import com.example.demo.registration.RegistrationRequest;
+import com.example.demo.registration.token.VerificationToken;
+import com.example.demo.registration.token.VerificationTokenRepository;
 import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.TelephoneCodeRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.validator.PersonalDataValidator;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,10 +30,12 @@ import static com.example.demo.constants.TextConstants.*;
 public class UserService{
     private final UserDataRepository userDataRepository;
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final UserMapper mapper;
     private final RoleRepository roleRepository;
+    private final TelephoneCodeRepository telephoneCodeRepository;
+    private final PersonalDataValidator personalDataValidator;
 
 
     public List<User> getUsers() {
@@ -52,7 +57,7 @@ public class UserService{
         var newUser =
                 User.builder()
                         .login(request.getLogin())
-//                        .password(passwordEncoder.encode(request.getPassword()))
+                        .password(passwordEncoder.encode(request.getPassword()))
                         .roles(roleRepository.findRoleByName(request.getRole()))
                         .personalData(newUserData)
                         .registrationDateTime(java.time.ZonedDateTime.now())
@@ -94,6 +99,20 @@ public class UserService{
         user.setVerified(true);
         userRepository.save(mapper.userDtoToUser(user));
         return VALID_MESSAGE;
+    }
+
+    public void savePersonalData(PersonalData exitingPersonalData, PersonalData newPersonalData) {
+        TelephoneCode newTelephoneCode = telephoneCodeRepository.findByCode(newPersonalData.getTelephone().getTelephoneCode().getCode());
+
+        personalDataValidator.isValid(newPersonalData);
+
+        exitingPersonalData.setFirstName(newPersonalData.getFirstName());
+        exitingPersonalData.setLastName(newPersonalData.getLastName());
+        exitingPersonalData.setDateOfBirth(newPersonalData.getDateOfBirth());
+        exitingPersonalData.getTelephone().setTelephoneNumber(newPersonalData.getTelephone().getTelephoneNumber());
+        exitingPersonalData.getTelephone().setTelephoneCode(newTelephoneCode);
+
+        userDataRepository.save(exitingPersonalData);
     }
 
 }

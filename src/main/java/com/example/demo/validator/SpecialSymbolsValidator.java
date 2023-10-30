@@ -1,28 +1,20 @@
 package com.example.demo.validator;
 
-import com.example.demo.validator.annotation.ValidSpecialSymbols;
-
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import com.example.demo.exception.SwearWordsException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpecialSymbolsValidator implements ConstraintValidator<ValidSpecialSymbols, String> {
+public class SpecialSymbolsValidator{
 
-    @Override
-    public void initialize(ValidSpecialSymbols constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
+    public String isValid(String info) {
 
-    @Override
-    public boolean isValid(String info, ConstraintValidatorContext constraintValidatorContext) {
-        boolean isValid = true;
         String specialSymbols = "1234567890-=+_)(*&^%$#@!\\|/}{[]?.><,№'\"";
         for(String i : specialSymbols.split("")) {
             if(info.contains(i)) {
-                isValid = false;
+                throw new SwearWordsException("Special symbols are not allowed in Data");
             }
         }
-        return isValid;
+
+        return info;
     }
 }

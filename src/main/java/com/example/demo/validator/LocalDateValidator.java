@@ -2,31 +2,27 @@ package com.example.demo.validator;
 
 import java.time.LocalDate;
 
+import com.example.demo.exception.LocalDateException;
 import com.example.demo.util.TimeUtilits;
-import com.example.demo.validator.annotation.ValidLocalDate;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalDateValidator implements ConstraintValidator<ValidLocalDate, LocalDate> {
+public class LocalDateValidator {
 
-    @Override
-    public void initialize(ValidLocalDate constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
-
-    @Override
-    public boolean isValid(LocalDate localDate, ConstraintValidatorContext context) {
+    public LocalDate isValid(LocalDate localDate) {
 
         if (localDate == null) {
-            return true;
+            throw new LocalDateException("Wrong Date Of Birth");
         }
         LocalDate currentDate = TimeUtilits.getCurrentDateTime();
         LocalDate minDate = currentDate.minusYears(10);
         LocalDate maxDate = currentDate.minusYears(100);
-        return localDate.isBefore(minDate) && localDate.isAfter(maxDate);
+        if(localDate.isBefore(minDate) && localDate.isAfter(maxDate)) {
+            return localDate;
+        } else{
+            throw new LocalDateException("Wrong Date Of Birth");
+        }
 
     }
 }
